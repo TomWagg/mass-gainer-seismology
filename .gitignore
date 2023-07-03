@@ -163,3 +163,8 @@ template/*
 !template/inlist*
 shmesa.sh
 mesagrid.py
+
+star
+LOGS
+photos
+.mesa_temp_cache
