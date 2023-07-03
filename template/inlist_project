@@ -1,4 +1,4 @@
-! inlist to evolve a 15 solar mass star
+! inlist to evolve a 3 solar mass star with some asteroseismology stuff
 
 ! For the sake of future readers of this file (yourself included),
 ! ONLY include the controls you are actually using.  DO NOT include
@@ -52,6 +52,18 @@
     ! stop when the center mass fraction of h1 drops below this limit
     xa_central_lower_limit_species(1) = 'h1'
     xa_central_lower_limit(1) = 1d-3
+
+  ! asteroseismology stuff
+    write_pulse_data_with_profile = .true.
+    add_atmosphere_to_pulse_data = .true.
+    pulse_data_format = 'GYRE'
+    history_interval = 1
+    profile_interval = 1
+    photo_interval = 9999
+
+    log_directory = 'LOGS'
+
+    max_num_profile_models = 10000
 
   ! wind
 
