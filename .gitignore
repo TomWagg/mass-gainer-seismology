@@ -162,6 +162,7 @@ cython_debug/
 template/*
 !template/inlist*
 shmesa.sh
+gyre6freqs.sh
 mesagrid.py
 
 star
