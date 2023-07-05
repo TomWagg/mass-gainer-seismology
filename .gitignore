@@ -162,6 +162,7 @@ cython_debug/
 template/*
 !template/inlist*
 !template/profile_columns.list
+!template/history_columns.list
 shmesa.sh
 gyre6freqs.sh
 mesagrid.py
