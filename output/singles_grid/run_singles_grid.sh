@@ -26,10 +26,10 @@ single () {
     fi
     mesa change $INLIST initial_mass $M
     
-    # ./rn
+    ./rn
 
-    # rm star
-    # rm -rf photos
+    rm star
+    rm -rf photos
     
     cd -
 }
