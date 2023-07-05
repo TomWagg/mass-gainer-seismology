@@ -174,3 +174,5 @@ photos
 *.synctex.gz
 *.xml
 *.bbl
+
+output/*/M*
