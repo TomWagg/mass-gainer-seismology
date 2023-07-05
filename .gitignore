@@ -170,3 +170,7 @@ star
 LOGS
 photos
 .mesa_temp_cache
+
+*.synctex.gz
+*.xml
+*.bbl

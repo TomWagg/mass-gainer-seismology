@@ -1,0 +1,83 @@
+\documentclass[12pt]{article}
+\usepackage[letterpaper, margin=0.8in]{geometry}
+\usepackage{nopageno,epsfig, amsmath, amssymb}
+\usepackage{physics}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\hypersetup{
+    colorlinks,
+    linkcolor={blue},
+    citecolor={blue},
+    urlcolor={blue}
+}
+\usepackage{empheq}
+\usepackage{wrapfig}
+
+\usepackage{fancyhdr, titling}
+
+\usepackage{parskip}
+\setlength{\parindent}{0pt}
+
+\title{Asteroseismology quick notes}
+\author{\textbf{Tom Wagg}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\theauthor}
+\lhead{\thetitle}
+\rfoot{Page \thepage}
+
+\newcommand{\class}{Asteroseismology Quick Notes}
+
+\newcommand{\tomtitle}{
+    \noindent {\LARGE \fontfamily{cmr}\selectfont \textbf{\class}} \hfill \\[1\baselineskip]
+    \noindent {\large \fontfamily{cmr}\selectfont Kavli Summer Program \hfill \textsc{Tom Wagg}}\\[0.5\baselineskip]
+}
+
+\newcommand{\question}[1]{{\noindent \it #1}}
+\newcommand{\answer}[1]{
+    \par\noindent\rule{\textwidth}{0.4pt}#1\vspace{0.5cm}
+}
+\newcommand{\todo}[1]{{\color{red}\begin{center}TODO: #1\end{center}}}
+
+% custom function for adding units
+\makeatletter
+\newcommand{\unit}[1]{%
+    \,\mathrm{#1}\checknextarg}
+\newcommand{\checknextarg}{\@ifnextchar\bgroup{\gobblenextarg}{}}
+\newcommand{\gobblenextarg}[1]{\,\mathrm{#1}\@ifnextchar\bgroup{\gobblenextarg}{}}
+\makeatother
+
+\newcommand{\avg}[1]{\left\langle #1 \right\rangle}
+\newcommand{\angstrom}{\mbox{\normalfont\AA}}
+\allowdisplaybreaks
+
+\begin{document}
+
+\tomtitle{}
+
+\thispagestyle{empty}
+
+\textbf{Brunt Vaisala Frequency:} Determines the buoyancy.
+\begin{equation}
+    N^2 = g \qty(\frac{1}{\Gamma_1 P} \dv{P}{r} - \frac{1}{\rho} \dv{\rho}{r})
+\end{equation}
+Or for a fully-ionised ideal gas:
+\begin{equation}
+    N^2 \approxeq \frac{g^2 \rho}{P} \qty(\grad_{\rm ad} - \grad + \grad_\mu)
+\end{equation}
+$N^2 > 0$ means you get oscillations about the equilibrium, otherwise you get convective instabilities.
+
+\textbf{Convective regions:} Gravity waves \textit{cannot} propagate in convective regions. Recall that $M > 1.2 \unit{M_{\odot}}$ stars have convective cores (and this covers the entire mass range for this project). Larger stars will have larger convective cores.
+
+\textbf{Lamb Frequency:} This seems to also be referred to as the characteristic acoustic frequency.
+\begin{equation}
+    S_{l}^2 = \frac{l(l + 1) c_s^2}{r^2}
+\end{equation}
+
+\textbf{$p$ modes and $g$ modes:} $p$ modes have high frequencies above both $N$ and $S_l$, whilst $g$ modes have low frequencies below both $N$ and $S_l$. Any intervening regions have waves exponentially increasing/decreasing as a function of $r$.
+
+\end{document}
+
+ 
