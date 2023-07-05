@@ -81,6 +81,15 @@
 
   ! mesh
 
+    max_allowed_nz = 10000
+    mesh_delta_coeff = 0.4
+    varcontrol_target = 1d-4
+    min_allowed_varcontrol_target = 1d-5
+    num_cells_for_smooth_gradL_composition_term = 10
+    threshold_for_smooth_gradL_composition_term = 0.02
+    num_cells_for_smooth_brunt_B = 10
+    threshold_for_smooth_brunt_B = 0.1
+
   ! solver
      ! options for energy conservation (see MESA V, Section 3)
      energy_eqn_option = 'dedt'
