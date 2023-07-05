@@ -77,6 +77,18 @@
 
   ! mixing
 
+  ! overshooting
+
+    ! by default leave the overshooting off
+
+    ! overshoot_scheme = 'exponential'
+    ! overshoot_zone_type = 'burn_H'
+    ! overshoot_zone_loc = 'core'
+    ! overshoot_bdy_loc = 'top'
+
+    ! overshoot_f = 0.01           ! sort of like how far does it extend
+    ! overshoot_f0 = 0.005         ! sort of like where inside does it start
+
   ! timesteps
 
   ! mesh
