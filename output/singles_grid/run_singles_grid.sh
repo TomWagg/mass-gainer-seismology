@@ -10,7 +10,7 @@ single () {
     
     PARAMS="os_"$os
     echo "Running mass $M" with $PARAMS
-    DIRECTORY=$OUTPUT/"M_"$M"-"$PARAMS 
+    DIRECTORY=$OUTPUT/"M_"$M"-"$PARAMS
     if [ -d "$DIRECTORY" ]; then echo 'skipping'; return 0; fi
     
     cp -R ../../template $DIRECTORY 
@@ -41,6 +41,7 @@ run_gyre () {
     PARAMS="os_"$os
     echo "Running GYRE for run M=$M" with $PARAMS
     DIRECTORY=$OUTPUT/"M_"$M"-"$PARAMS
+    if [ -d "$DIRECTORY" ]; then echo 'skipping'; return 0; fi
 
     cd $DIRECTORY/LOGS
 
@@ -49,7 +50,7 @@ run_gyre () {
     cd -
 }
 
-for M in `seq 4 4`; do
+for M in `seq 3 3`; do
     for os in 0 1; do
         single $M $os
         run_gyre $M $os
