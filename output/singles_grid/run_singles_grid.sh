@@ -34,8 +34,24 @@ single () {
     cd -
 }
 
-for M in `seq 3 5`; do
+run_gyre () {
+    local M=$1
+    local os=$2
+
+    PARAMS="os_"$os
+    echo "Running GYRE for run M=$M" with $PARAMS
+    DIRECTORY=$OUTPUT/"M_"$M"-"$PARAMS
+
+    cd $DIRECTORY/LOGS
+
+    find . -name "*.GYRE" -print0 | xargs -0 -P 6 -I{} ~/Documents/research/kavli-2023/algol-seismology/gyre6freqs.sh -i {} -t 1
+
+    cd -
+}
+
+for M in `seq 4 4`; do
     for os in 0 1; do
         single $M $os
+        run_gyre $M $os
     done
 done
