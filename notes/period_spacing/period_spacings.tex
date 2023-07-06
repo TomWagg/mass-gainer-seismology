@@ -73,13 +73,25 @@ where $l$ is the spherical degree and
 is the Brunt Vaisala (BV) frequency which is integrated within the g-mode cavity. Recall that $\grad_{\rm ad}$ is a constant (equal to 2/5 for an ideal gas), $\grad$ is the temperature gradient and $\grad_\mu$ is the chemical composition gradient.
 
 This means that the period spacing, for a fixed spherical degree, is dependent on the location of
-\begin{itemize}
-    \item[(i)] the core boundary (I'm assuming the cavity extends to the edge of the star so $r_1$ is fixed)
-    \item[(ii)] the BV frequency profile
-\end{itemize}
+\begin{enumerate}
+    \item The core boundary (I'm assuming the cavity extends to the edge of the star so $r_1$ is fixed)
+    \item The BV frequency profile
+\end{enumerate}
 For more massive stars, the size of the convective core increases, which reduces the size of the g-mode cavity and thus decreases the integral. This tends to dominate over any changes in the BV profile and so the overall period spacing increases almost monotonically along with stellar evolution \citep{Miglio+2008}.
 
 In addition to these effects, we haven't even thought about rotation yet! This is a rather glaring omission since we expect some pretty fast rotation for our target stars it seems. Under the traditional approximation of rotation (TAR), the period spacing is quasi-linearly related to period rather than constant, and the rate of this rotation determines the gradient of the relation \citep{Bouabid+2013}. So essentially instead of a flat line we expect increasingly slanted lines for faster rotating stars. I \textit{think} that Cole also mentioned that the gradient of this line will flip for retrograde rotators.
+
+So what happens when we get deviations from our beautiful straight lines, what's up with that? These occur due to abrupt shifts in the BV profile, sometimes referred to as buoyancy glitches \citep[e.g.,]{Cunha+2019}, which end up trapping particular modes in certain regions of the star. This means that certain modes end up getting shifted in period and moving away from the pattern.
+
+Okay well why do those glitches in the BV profile happen? Often strong chemical gradients cause these effects and we can see this in general around the boundary of the convective core where the chemical composition changes rapidly. In Figure~\ref{fig:prop} you can see an example propagation diagram for a $4 \unit{M_{\odot}}$ star midway through its main sequence. The purple curve shows the BV profile and in particular a sharp feature around $1 \unit{M_{\odot}}$, corresponding to the boundary of the convective core.
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.75\textwidth]{example_propagation_diagram.pdf}
+    \caption{An example propagation diagram for a $4 \protect\unit{M_{\odot}}$ star midway through its main sequence.}
+    \label{fig:prop}
+\end{figure}
+
+These same sharp features should occur after a star experiences mass transfer and so we might expect that the period spacing pattern bears some imprint of the stars previous mass transfer episode - we've got 4 more weeks to find out!
 
 \bibliographystyle{aasjournal}
 \bibliography{refs}
