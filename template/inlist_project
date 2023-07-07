@@ -43,6 +43,13 @@
     initial_mass = 3 ! in Msun units
     initial_z = 0.02
 
+    use_other_adjust_mdot = .true.
+
+    x_logical_ctrl(1) = .true.              ! whether to include mass accretion from MT
+    x_ctrl(1) = 0.65                        ! central H abundance at which to commence MT
+    x_ctrl(2) = 3.5                         ! total mass at which to end accretion (Msol)
+    x_ctrl(3) = 0.5d-7                      ! mass transfer rate during accretion (Msol/yr)
+
   ! when to stop
 
     ! stop when the star nears ZAMS (Lnuc/L > 0.99)
