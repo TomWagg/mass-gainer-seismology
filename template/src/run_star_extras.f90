@@ -89,8 +89,6 @@
                 s% mass_change = 0.0
             endif
         endif
-
-        ! TODO: maybe it should be mstar_dot?
       end subroutine mass_transfer_adjust_mdot
      
 
