@@ -43,36 +43,20 @@
     initial_mass = 3 ! in Msun units
     initial_z = 0.02
 
-    use_other_adjust_mdot = .true.
-
-    x_logical_ctrl(1) = .true.              ! whether to include mass accretion from MT
-    x_ctrl(1) = 0.65                        ! central H abundance at which to commence MT
-    x_ctrl(2) = 3.5                         ! total mass at which to end accretion (Msol)
-    x_ctrl(3) = 2.5d-7                      ! mass transfer rate during accretion (Msol/yr)
-
-    delta_lg_star_mass_limit = 1e-3
-    delta_lg_star_mass_hard_limit = 2e-3
-
   ! when to stop
-
-    ! stop when the star nears ZAMS (Lnuc/L > 0.99)
-    !Lnuc_div_L_zams_limit = 0.99d0
-    !stop_near_zams = .true.
 
     ! stop when the center mass fraction of h1 drops below this limit
     xa_central_lower_limit_species(1) = 'h1'
     xa_central_lower_limit(1) = 1d-3
 
-  ! asteroseismology stuff
+  ! asteroseismology
     write_pulse_data_with_profile = .true.
     add_atmosphere_to_pulse_data = .true.
     pulse_data_format = 'GYRE'
     history_interval = 1
     profile_interval = 1
     photo_interval = 9999
-
     log_directory = 'LOGS'
-
     max_num_profile_models = 10000
 
   ! wind
@@ -87,6 +71,13 @@
 
   ! mixing
 
+  ! accretion (by default off)
+    use_other_adjust_mdot = .false.
+    x_logical_ctrl(1) = .false.             ! whether to include mass accretion from MT
+    x_ctrl(1) = 0.65                        ! central H abundance at which to commence MT
+    x_ctrl(2) = 3.5                         ! total mass at which to end accretion (Msol)
+    x_ctrl(3) = 2.5d-7                      ! mass transfer rate during accretion (Msol/yr)
+
   ! overshooting
 
     ! by default overshooting is now ON
@@ -99,6 +90,9 @@
     overshoot_f0 = 0.005         ! sort of like where inside does it start
 
   ! timesteps
+
+    delta_lg_star_mass_limit = 1e-3
+    delta_lg_star_mass_hard_limit = 2e-3
 
   ! mesh
 
