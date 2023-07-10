@@ -16,10 +16,10 @@ single () {
     cp -R ../../template $DIRECTORY 
     cd $DIRECTORY 
     
-    if [[ $MT == 1 ]]; then
+    if [[ $MT > 0 ]]; then
         mesa change $INLIST use_other_adjust_mdot ".true."
         mesa change $INLIST 'x_logical_ctrl(1)' ".true."
-        mesa change $INLIST 'x_ctrl(1)' 0.65
+        mesa change $INLIST 'x_ctrl(1)' $MT
         mesa change $INLIST 'x_ctrl(2)' 3.5
         mesa change $INLIST 'x_ctrl(3)' 2.5d-7
     fi
@@ -50,6 +50,6 @@ run_gyre () {
 }
 
 single 3 0
-single 4 1
-# single 3 1
+single 3 0.65
+single 3 0.4
 single 3.51317 0
