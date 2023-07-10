@@ -48,7 +48,7 @@
     x_logical_ctrl(1) = .true.              ! whether to include mass accretion from MT
     x_ctrl(1) = 0.65                        ! central H abundance at which to commence MT
     x_ctrl(2) = 3.5                         ! total mass at which to end accretion (Msol)
-    x_ctrl(3) = 0.5d-7                      ! mass transfer rate during accretion (Msol/yr)
+    x_ctrl(3) = 2.5d-7                      ! mass transfer rate during accretion (Msol/yr)
 
   ! when to stop
 
