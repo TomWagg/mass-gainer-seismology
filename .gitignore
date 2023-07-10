@@ -177,4 +177,4 @@ photos
 *.xml
 *.bbl
 
-output/*/*
+output/*/*/*
