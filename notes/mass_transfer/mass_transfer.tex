@@ -1,0 +1,84 @@
+\documentclass[12pt]{article}
+\usepackage[letterpaper, margin=0.8in]{geometry}
+\usepackage{nopageno,epsfig, amsmath, amssymb}
+\usepackage{physics}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\hypersetup{
+    colorlinks,
+    linkcolor={blue},
+    citecolor={blue},
+    urlcolor={blue}
+}
+\usepackage{empheq}
+\usepackage{wrapfig}
+
+\usepackage{fancyhdr, titling}
+
+\usepackage{parskip}
+\setlength{\parindent}{0pt}
+
+\title{Mass Transfer Rates}
+\author{\textbf{Tom Wagg}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\theauthor}
+\lhead{\thetitle}
+\rfoot{Page \thepage}
+
+\newcommand{\tomtitle}{
+    \noindent {\LARGE \fontfamily{cmr}\selectfont \textbf{\thetitle}} \hfill \\[1\baselineskip]
+    \noindent {\large \fontfamily{cmr}\selectfont Kavli Summer Program \hfill \textsc{Tom Wagg}}\\[0.5\baselineskip]
+}
+
+\newcommand{\question}[1]{{\noindent \it #1}}
+\newcommand{\answer}[1]{
+    \par\noindent\rule{\textwidth}{0.4pt}#1\vspace{0.5cm}
+}
+\newcommand{\todo}[1]{{\color{red}\begin{center}TODO: #1\end{center}}}
+
+% custom function for adding units
+\makeatletter
+\newcommand{\unit}[1]{%
+    \,\mathrm{#1}\checknextarg}
+\newcommand{\checknextarg}{\@ifnextchar\bgroup{\gobblenextarg}{}}
+\newcommand{\gobblenextarg}[1]{\,\mathrm{#1}\@ifnextchar\bgroup{\gobblenextarg}{}}
+\makeatother
+
+\newcommand{\avg}[1]{\left\langle #1 \right\rangle}
+\newcommand{\angstrom}{\mbox{\normalfont\AA}}
+\allowdisplaybreaks
+
+\begin{document}
+
+\tomtitle{}
+
+\thispagestyle{empty}
+
+Let's consider what the mass transfer rates for our stars should be. First let's just write some of the basic timescales. The nuclear timescale we can reduce assuming H core fusion and the mass-luminosity relation.
+\begin{align}
+    \tau_{\rm nuc} &\sim \frac{M f_M c^2 (\Delta m/m)}{L}\\
+    &\sim 7.1 \times 10^{-4} \frac{M c^2}{L}\\
+    &\sim 7.1 \times 10^{-4} \frac{\unit{M_{\odot}} c^2}{1.4 \unit{L_{\odot}}} \qty(\frac{M}{\unit{M_{\odot}}})^{-2.5} \\
+    \Aboxed{ \tau_{\rm nuc} &\sim 7.5 \times 10^{9} \unit{yr} \qty(\frac{M}{\unit{M_{\odot}}})^{-2.5} }
+\end{align}
+Then the thermal timescale is approximately:
+\begin{align}
+    \tau_{\rm therm} &\sim \frac{G M^2}{R L} \\
+    &\sim \frac{G \unit{M_{\odot}^2}}{1.4 \unit{R_\odot} \unit{L_\odot}} \qty(\frac{R}{\unit{R_\odot}})^{-1} \qty(\frac{M}{\unit{M_\odot}})^{-1.5} \\
+    \Aboxed{ \tau_{\rm therm} &\sim 2.2 \times 10^{7} \unit{yr} \qty(\frac{R}{\unit{R_\odot}})^{-1} \qty(\frac{M}{\unit{M_\odot}})^{-1.5} }
+\end{align}
+
+Now we can consider some different limits. Assuming that we accrete on a timescale of $\tau_{\rm accrete}$ (and that $\tau_{\rm therm} \ll \tau_{\rm nuc}$):
+\begin{itemize}
+    \item $\tau_{\rm accrete} \gg \tau_{\rm nuc}$: If the accretion is much slower than the nuclear timescale then the star will exhaust a significant fraction (or all!) of its central hydrogen before accretion can complete. This is not very realistic.
+    \item $\tau_{\rm accrete} \sim \tau_{\rm nuc}$:
+    \item $\tau_{\rm accrete} \sim \tau_{\rm therm}$:
+    \item $\tau_{\rm accrete} \ll \tau_{\rm therm}$:
+\end{itemize}
+
+\end{document}
+
+ 
