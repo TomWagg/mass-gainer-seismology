@@ -84,15 +84,9 @@
             if (s% center_h1 < s% x_ctrl(1) .and. s% star_mass < s% x_ctrl(2)) then
                 ! set mass transfer rate to custom value
                 s% mass_change = s% x_ctrl(3)
-
-                ! increase time resolution
-                s% time_delta_coeff = 0.1
             else
                 ! otherwise no accretion
                 s% mass_change = 0.0
-
-                ! reset time resolution
-                s% time_delta_coeff = 1
             endif
         endif
       end subroutine mass_transfer_adjust_mdot
