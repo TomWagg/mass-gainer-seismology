@@ -648,8 +648,8 @@
 
 !# Oscillations
    !brunt_N2 ! brunt-vaisala frequency squared
-   !brunt_N2_structure_term
-   !brunt_N2_composition_term
+   brunt_N2_structure_term
+   brunt_N2_composition_term
    !log_brunt_N2_structure_term
    !log_brunt_N2_composition_term
    !brunt_A ! = N^2*r/g

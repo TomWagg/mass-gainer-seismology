@@ -71,6 +71,11 @@
 
   ! mixing
 
+    set_min_D_mix = .false.
+    mass_lower_limit_for_min_D_mix = 0d0
+    mass_upper_limit_for_min_D_mix = 1d99
+    min_D_mix = 1d2
+
   ! accretion (by default off)
     use_other_adjust_mdot = .false.
     x_logical_ctrl(1) = .false.             ! whether to include mass accretion from MT
