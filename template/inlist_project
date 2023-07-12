@@ -8,7 +8,7 @@
   ! see star/defaults/star_job.defaults
 
   ! begin with a pre-main sequence model
-  !  create_pre_main_sequence_model = .true.
+  create_pre_main_sequence_model = .true.
 
   ! save a model at the end of the run
   !  save_model_when_terminate = .false.
