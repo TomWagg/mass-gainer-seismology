@@ -8,7 +8,7 @@
   ! see star/defaults/star_job.defaults
 
   ! begin with a pre-main sequence model
-  create_pre_main_sequence_model = .true.
+  ! create_pre_main_sequence_model = .true.
 
   ! save a model at the end of the run
   !  save_model_when_terminate = .false.
@@ -52,11 +52,12 @@
   ! asteroseismology
     write_pulse_data_with_profile = .true.
     add_atmosphere_to_pulse_data = .true.
+    add_double_points_to_pulse_data = .true.
     pulse_data_format = 'GYRE'
+    log_directory = 'LOGS'
     history_interval = 1
     profile_interval = 1
     photo_interval = 9999
-    log_directory = 'LOGS'
     max_num_profile_models = 10000
 
   ! wind
@@ -93,6 +94,9 @@
 
     overshoot_f = 0.01           ! sort of like how far does it extend
     overshoot_f0 = 0.005         ! sort of like where inside does it start
+
+    ! TOM! Think about Claret & Torres 2017
+    ! TOM! Cole says set alpha_sc = 0.1
 
   ! timesteps
 
