@@ -20,14 +20,15 @@ params = {'figure.figsize': (12, 8),
 plt.rcParams.update(params)
 
 
-def simple_hr(track, ylabel=r'Luminosity $\mathbf{\log_{10}(L/L_{\odot})}$',
+def simple_hr(track=None, df=None, ylabel=r'Luminosity $\mathbf{\log_{10}(L/L_{\odot})}$',
               cbar_var="center_he4", cbar_label=r"$X_{\rm He, center}$", trim_pre_ms=True,
               fig=None, ax=None, show=True, add_axes_info=False, plot_line=True, **kwargs):
     new_fig = (fig is None or ax is None)
     if new_fig:
         fig, ax = plt.subplots(figsize=(8,6))
     
-    df = track.history
+    if df is None:
+        df = track.history
 
     if trim_pre_ms:
         df = df.loc[df.center_h1 <= df.center_h1.max() - 0.005]
