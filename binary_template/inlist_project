@@ -10,7 +10,7 @@
          
    m1 = 4   ! donor mass in Msun
    m2 = 3   ! companion mass in Msun
-   initial_period_in_days = 1 ! 1 to 10 days, ~20 binaries, somewhere between 2 and 4 days transition
+   initial_period_in_days = 5 ! 1 to 10 days, ~20 binaries, somewhere between 2 and 4 days transition
    initial_eccentricity = 0.0d0
 
    log_directory = 'LOGS_binary'
