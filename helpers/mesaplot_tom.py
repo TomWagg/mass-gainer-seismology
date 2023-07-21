@@ -22,7 +22,9 @@ plt.rcParams.update(params)
 
 def simple_hr(track=None, df=None, ylabel=r'Luminosity $\mathbf{\log_{10}(L/L_{\odot})}$',
               cbar_var="center_he4", cbar_label=r"$X_{\rm He, center}$", trim_pre_ms=True,
-              fig=None, ax=None, show=True, add_axes_info=False, plot_line=True, **kwargs):
+              fig=None, ax=None, show=True, add_axes_info=False, plot_line=True, 
+              cbar_loc=[0.38, 0.025, 0.6, 0.025], annotate_start=None, annotate_end=None,
+              **kwargs):
     new_fig = (fig is None or ax is None)
     if new_fig:
         fig, ax = plt.subplots(figsize=(8,6))
@@ -42,6 +44,13 @@ def simple_hr(track=None, df=None, ylabel=r'Luminosity $\mathbf{\log_{10}(L/L_{\
     if plot_line:
         ax.plot(df['log_Teff'], df['log_L'], color="lightgrey", zorder=-1)
     ax.scatter(df['log_Teff'], df['log_L'], c=c, **kwargs)
+
+    if annotate_start is not None:
+        ax.annotate(annotate_start, xy=(df['log_Teff'].iloc[0], df['log_L'].iloc[0]), color="lightgrey",
+                    ha="right", va="top")
+    if annotate_end is not None:
+        ax.annotate(annotate_end, xy=(df['log_Teff'].iloc[-1], df['log_L'].iloc[-1]), color="lightgrey",
+                    ha="left", va="bottom")
     
     if new_fig or add_axes_info:
         ax.invert_xaxis()
@@ -49,7 +58,7 @@ def simple_hr(track=None, df=None, ylabel=r'Luminosity $\mathbf{\log_{10}(L/L_{\
         ax.set_ylabel(ylabel)
 
         if cbar_var is not None:
-            inset_ax = ax.inset_axes([0.38, 0.025, 0.6, 0.025])
+            inset_ax = ax.inset_axes(cbar_loc)
             fig.colorbar(ax.collections[0], label=cbar_label, cax=inset_ax, orientation="horizontal", location="top")
     
     if show:
