@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import astropy.units as u
+import astropy.constants as const
 
 plt.rc('font', family='serif')
 plt.rcParams['text.usetex'] = False
@@ -22,11 +23,17 @@ plt.rcParams.update(params)
 mass_gainer_col = plt.get_cmap("magma")(0.3)
 single_col = plt.get_cmap("magma")(0.8)
 
+def get_radius(history=None, L=None, Teff=None):
+    if L is None or Teff is None:
+        L = 10**(history["log_L"]).values * u.Lsun
+        Teff = 10**(history["log_Teff"]).values * u.K
+    return np.sqrt(L / (4 * np.pi * const.sigma_sb * Teff**4)).to(u.Rsun)
+
 
 def simple_hr(track=None, df=None, ylabel=r'Luminosity $\log_{10}(\mathbf{L/L_{\odot}})$',
               cbar_var="center_he4", cbar_label=r"$X_{\rm He, center}$", trim_pre_ms=True,
               fig=None, ax=None, show=True, add_axes_info=False, plot_line=True, 
-              cbar_loc=[0.38, 0.025, 0.6, 0.025], annotate_start=None, annotate_end=None,
+              cbar_loc=[0.38, 0.025, 0.6, 0.025], annotate_start=None, annotate_end=None, R_levels=None,
               **kwargs):
     new_fig = (fig is None or ax is None)
     if new_fig:
@@ -64,6 +71,21 @@ def simple_hr(track=None, df=None, ylabel=r'Luminosity $\log_{10}(\mathbf{L/L_{\
             inset_ax = ax.inset_axes(cbar_loc)
             fig.colorbar(ax.collections[0], label=cbar_label, cax=inset_ax, orientation="horizontal", location="top")
     
+    if R_levels is not None:
+        T_range = np.logspace(*ax.get_xlim(), 1000)
+        L_range = np.logspace(*ax.get_ylim(), 1000)
+
+        T, L = np.meshgrid(T_range, L_range)
+
+        R = get_radius(Teff=T * u.K, L=L * u.Lsun)
+
+        def fmt(x):
+            return f"{x:1.2f} " + r"$\rm R_{\odot}$"
+
+        CS = ax.contour(np.log10(T), np.log10(L), R.to(u.Rsun).value, levels=R_levels,
+                        colors="lightgrey", zorder=-1, linewidths=1, linestyles="dotted", alpha=0.4)
+        ax.clabel(CS, CS.levels, inline=True, fontsize=10, fmt=fmt)
+
     if show:
         plt.show()
         
