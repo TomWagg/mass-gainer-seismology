@@ -3,8 +3,8 @@
 #$ -o $JOB_ID.o
 #$ -cwd
 #$ -l h_vmem=10G
-#$ -l h_cpu=06:00:00
-#$ -pe sm 10
+#$ -l h_cpu=08:00:00
+#$ -pe sm 6
 #$ -M tomwagg@mpa-garching.mpg.de
 #$ -m beas # send an email at begin, ending, abortion and rescheduling of job
 
