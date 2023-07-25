@@ -4,7 +4,6 @@
 #$ -cwd
 #$ -l h_vmem=5G
 #$ -l h_cpu=0:30:00
-#$ -l qname=pascal
 #$ -pe sm 6
 #$ -M tomwagg@mpa-garching.mpg.de
 #$ -m beas # send an email at begin, ending, abortion and rescheduling of job
