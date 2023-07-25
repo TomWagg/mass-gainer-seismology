@@ -159,11 +159,11 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-template/*
-!template/inlist*
-!template/profile_columns.list
-!template/history_columns.list
-!template/src
+*template/*
+!*template/inlist*
+!*template/profile_columns.list
+!*template/history_columns.list
+!*template/src
 shmesa.sh
 gyre6freqs.sh
 mesagrid.py
