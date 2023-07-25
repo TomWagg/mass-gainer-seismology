@@ -2,9 +2,10 @@
 #$ -e $JOB_ID.$TASK_ID.e
 #$ -o $JOB_ID.$TASK_ID.o
 #$ -cwd
-#$ -l h_vmem=10G
+#$ -l h_vmem=5G
 #$ -l h_cpu=0:30:00
-#$ -pe sm 10
+#$ -l qname=pascal
+#$ -pe sm 6
 #$ -M tomwagg@mpa-garching.mpg.de
 #$ -m beas # send an email at begin, ending, abortion and rescheduling of job
 
@@ -17,6 +18,7 @@ export JOB_NAME="$1"
 
 export OMP_NUM_THREADS=$NSLOTS
 export MESA_DIR=/afs/mpa/temp/tomwagg/MESA/mesa
+export INLIST="inlist_project"
 
 # move to the right directory
 cd $GRID_DIR
@@ -26,17 +28,17 @@ source "$PROJ_DIR/shmesa.sh"
 
 # the range of masses over which we are going to iterate
 masses=($(seq 3 0.1 6))
-TASK_ID=2 # TODO REMOVE THIS
-M=${masses[$TASK_ID]}
+M=${masses[$(($SGE_TASK_ID - 1))]}
 
 echo "Running mass $M"
 DIRECTORY=$GRID_DIR/"M_"$M
-if [ -d "$DIRECTORY" ]; then echo 'skipping'; return 0; fi
+if [ -d "$DIRECTORY" ]; then echo 'skipping'; exit 0; fi
 
 cp -R ../../../template $DIRECTORY 
-cd $DIRECTORY 
+cd $DIRECTORY
 
 mesa change $INLIST initial_mass $M
+mesa change $INLIST 'xa_central_lower_limit(1)' '1d-5'
 
 ./rn
 
