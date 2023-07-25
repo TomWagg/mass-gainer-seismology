@@ -11,6 +11,7 @@ fs = 24
 params = {'figure.figsize': (12, 8),
           'legend.fontsize': 0.6*fs,
           'axes.labelsize': 0.8*fs,
+          'axes.titlesize': 0.8*fs,
           'xtick.labelsize': 0.6 * fs,
           'ytick.labelsize': 0.6 * fs,
           'axes.linewidth': 1.1,
@@ -57,10 +58,10 @@ def simple_hr(track=None, df=None, ylabel=r'Luminosity $\log_{10}(\mathbf{L/L_{\
 
     if annotate_start is not None:
         ax.annotate(annotate_start, xy=(df['log_Teff'].iloc[0], df['log_L'].iloc[0]), color="lightgrey",
-                    ha="right", va="top")
+                    ha="right", va="top", fontsize=0.5*fs)
     if annotate_end is not None:
         ax.annotate(annotate_end, xy=(df['log_Teff'].iloc[-1], df['log_L'].iloc[-1]), color="lightgrey",
-                    ha="left", va="bottom")
+                    ha="left", va="bottom", fontsize=0.5*fs)
     
     if new_fig or add_axes_info:
         ax.invert_xaxis()
@@ -168,7 +169,7 @@ def plot_BV_profile(age=None, X_c=None, tracks=None, mt_index=3, ref_index=2,
 
     ax.set_yscale("log")
     ax.set_xscale(x_scale)
-    ax.set_ylim(1e0, 1e4)
+    ax.set_ylim(5e1, 1e4)
     
     for mod, track, tag, col in zip([acc_mod, non_acc_mod],
                                     [tracks[mt_index], tracks[ref_index]],
