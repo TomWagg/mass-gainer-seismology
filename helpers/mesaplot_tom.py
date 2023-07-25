@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import astropy.units as u
 import astropy.constants as const
+from scipy.interpolate import interp1d
 
 plt.rc('font', family='serif')
 plt.rcParams['text.usetex'] = False
@@ -93,7 +94,7 @@ def simple_hr(track=None, df=None, ylabel=r'Luminosity $\log_{10}(\mathbf{L/L_{\
 
 
 def plot_X_H_profile(age=None, X_c=None, tracks=None, mt_index=1, ref_index=2, fig=None, ax=None, show=True,
-                     label_with="title"):
+                     label_with="title", fill=False):
     if age is None and X_c is None:
         raise ValueError("At least one of `age` or `X_c` must not be None")
     if tracks is None:
@@ -117,6 +118,17 @@ def plot_X_H_profile(age=None, X_c=None, tracks=None, mt_index=1, ref_index=2, f
     ax.plot(tracks[ref_index].profiles[non_acc_mod]["mass"],
             tracks[ref_index].profiles[non_acc_mod]["x_mass_fraction_H"],
              label="Single", color=single_col, lw=lw)
+    
+    if fill:
+        ref_x_H = interp1d(tracks[ref_index].profiles[non_acc_mod]["mass"],
+                           tracks[ref_index].profiles[non_acc_mod]["x_mass_fraction_H"], bounds_error=False)
+        ax.fill_between(tracks[mt_index].profiles[acc_mod]["mass"],
+            ref_x_H(tracks[mt_index].profiles[acc_mod]["mass"]),
+            tracks[mt_index].profiles[acc_mod]["x_mass_fraction_H"],
+             zorder=3, color=mass_gainer_col, lw=lw, alpha=0.2)
+        ax.fill_between(tracks[ref_index].profiles[non_acc_mod]["mass"],
+                tracks[ref_index].profiles[non_acc_mod]["x_mass_fraction_H"],
+                color=single_col, lw=lw, alpha=0.2)
 
     ax.legend(loc="lower right", fontsize=0.4 * fs)
 
@@ -184,7 +196,7 @@ def plot_BV_profile(age=None, X_c=None, tracks=None, mt_index=3, ref_index=2,
             ax.fill_between(m, ax.get_ylim()[0], brunt, color=col, alpha=0.2, zorder=4)
 
     ax.set_ylabel("Brunt–Väisälä\n[Cycles per day]", fontsize=0.5 * fs)
-    ax.set_xlabel(r"Mass $\mathbf{M/M_{\odot}}$")
+    ax.set_xlabel(r"Mass [$\rm M_{\odot}$]")
     ax.legend(loc="upper right", ncol=2, fontsize=0.4 * fs)
     
     m_fin = tracks[mt_index].history["star_mass"].iloc[-1]
