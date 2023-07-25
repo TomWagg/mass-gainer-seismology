@@ -74,12 +74,12 @@
     alpha_semiconvection = 0.1
     use_ledoux_criterion = .true.
 
-    thermohaline_coeff = 1000
-    thermohaline_option = 'Kippenhahn'
+    ! thermohaline_coeff = 1000
+    ! thermohaline_option = 'Kippenhahn'
 
   ! mixing
 
-    set_min_D_mix = .false.
+    set_min_D_mix = .true.
     mass_lower_limit_for_min_D_mix = 0d0
     mass_upper_limit_for_min_D_mix = 1d99
     min_D_mix = 1d2

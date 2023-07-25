@@ -177,9 +177,9 @@
                 call detach_binary(binary_id, ierr)
 
                 ! if we now want thermohaline mixing in the accretor then turn it on
-                if (b% s_accretor% x_logical_ctrl(2)) then
-                    b% s_accretor% thermohaline_coeff = 1
-                    b% s_accretor% thermohaline_option = 'Kippenhahn'
+                if (b% s1% x_logical_ctrl(2)) then
+                    b% s1% thermohaline_coeff = 1
+                    b% s1% thermohaline_option = 'Kippenhahn'
                 endif
               end if
            end if
