@@ -25,11 +25,28 @@ plt.rcParams.update(params)
 mass_gainer_col = plt.get_cmap("magma")(0.3)
 single_col = plt.get_cmap("magma")(0.8)
 
+
+"""First some help functions that I use in plotting"""
+
+@np.vectorize
+def find_closest_model_number(track, age=None, X_c=None):
+    if age is None and X_c is None:
+        raise ValueError("At least one of `age` or `X_c` must not be None")
+
+    if X_c is None:
+        return np.abs(track.history["star_age"] / 1e6 - age).argmin()
+    else:
+        return np.abs(track.history["center_h1"] - X_c).argmin()        
+
+
 def get_radius(history=None, L=None, Teff=None):
     if L is None or Teff is None:
         L = 10**(history["log_L"]).values * u.Lsun
         Teff = 10**(history["log_Teff"]).values * u.K
     return np.sqrt(L / (4 * np.pi * const.sigma_sb * Teff**4)).to(u.Rsun)
+
+
+"""Then the actual plotting functions"""
 
 
 def simple_hr(track=None, df=None, ylabel=r'Luminosity $\log_{10}(\mathbf{L/L_{\odot}})$',
@@ -94,7 +111,8 @@ def simple_hr(track=None, df=None, ylabel=r'Luminosity $\log_{10}(\mathbf{L/L_{\
     return fig, ax
 
 
-def plot_X_H_profile(age=None, X_c=None, tracks=None, mt_index=1, ref_index=2, fig=None, ax=None, show=True,
+def plot_X_H_profile(age=None, X_c=None, tracks=None, labels=["Mass-gainer", "Single"],
+                    colours=[mass_gainer_col, single_col], fig=None, ax=None, show=True,
                      label_with="title", fill=False):
     if age is None and X_c is None:
         raise ValueError("At least one of `age` or `X_c` must not be None")
@@ -104,39 +122,20 @@ def plot_X_H_profile(age=None, X_c=None, tracks=None, mt_index=1, ref_index=2, f
         fig, ax = plt.subplots(figsize=(7, 3))
     plt.cla()
 
-    if X_c is None:
-        acc_mod = np.abs(tracks[mt_index].history["star_age"] / 1e6 - age).argmin()
-        non_acc_mod = np.abs(tracks[ref_index].history["star_age"] / 1e6 - age).argmin()
-    else:
-        acc_mod = np.abs(tracks[mt_index].history["center_h1"] - X_c).argmin()
-        non_acc_mod = np.abs(tracks[ref_index].history["center_h1"] - X_c).argmin()
-
     lw = 2
 
-    ax.plot(tracks[mt_index].profiles[acc_mod]["mass"],
-            tracks[mt_index].profiles[acc_mod]["x_mass_fraction_H"],
-             label="Mass-gainer", zorder=3, color=mass_gainer_col, lw=lw)
-    ax.plot(tracks[ref_index].profiles[non_acc_mod]["mass"],
-            tracks[ref_index].profiles[non_acc_mod]["x_mass_fraction_H"],
-             label="Single", color=single_col, lw=lw)
-    
-    if fill:
-        ref_x_H = interp1d(tracks[ref_index].profiles[non_acc_mod]["mass"],
-                           tracks[ref_index].profiles[non_acc_mod]["x_mass_fraction_H"], bounds_error=False)
-        ax.fill_between(tracks[mt_index].profiles[acc_mod]["mass"],
-            ref_x_H(tracks[mt_index].profiles[acc_mod]["mass"]),
-            tracks[mt_index].profiles[acc_mod]["x_mass_fraction_H"],
-             zorder=3, color=mass_gainer_col, lw=lw, alpha=0.2)
-        ax.fill_between(tracks[ref_index].profiles[non_acc_mod]["mass"],
-                tracks[ref_index].profiles[non_acc_mod]["x_mass_fraction_H"],
-                color=single_col, lw=lw, alpha=0.2)
+    for track, label, col in zip(tracks, labels, colours):
+        mod = find_closest_model_number(track=track, age=age, X_c=X_c)
+        ax.plot(track.profiles[mod]["mass"],
+                track.profiles[mod]["x_mass_fraction_H"],
+                label=label, zorder=3, color=col, lw=lw)
 
     ax.legend(loc="lower right", fontsize=0.4 * fs)
 
     ax.set_xlabel(r"Mass [$\rm M_{\odot}$]")
     ax.set_ylabel("H mass fraction", fontsize=0.7*fs)
 
-    m_fin = tracks[mt_index].history["star_mass"].iloc[-1]
+    m_fin = tracks[0].history["star_mass"].iloc[-1]
     ax.annotate(f"Extends to {m_fin:1.1f} " + r"$\rm M_{\odot}$", xy=(1, 0.5), xytext=(0.95, 0.5), xycoords="axes fraction",
                  ha="right", va="center", color="lightgrey", arrowprops=dict(arrowstyle="-|>", color="lightgrey"))
 
@@ -175,11 +174,7 @@ def plot_BV_profile(age=None, X_c=None, tracks=None, labels=["Mass-gainer", "Sin
     ax.set_ylim(5e1, 1e4)
     
     for track, tag, col in zip(tracks, labels, colours):
-        if X_c is None:
-            mod = np.abs(track.history["star_age"] / 1e6 - age).argmin()
-        else:
-            mod = np.abs(track.history["center_h1"] - X_c).argmin()
-
+        mod = find_closest_model_number(track=track, age=age, X_c=X_c)
         m = track.profiles[mod - 1]["mass"]
         if fractional_mass:
             m = m / m.max()
