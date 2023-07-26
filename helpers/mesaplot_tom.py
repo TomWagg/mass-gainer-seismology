@@ -12,7 +12,7 @@ fs = 24
 params = {'figure.figsize': (12, 8),
           'legend.fontsize': 0.6*fs,
           'axes.labelsize': 0.8*fs,
-          'axes.titlesize': 0.8*fs,
+          'axes.titlesize': 0.5*fs,
           'xtick.labelsize': 0.6 * fs,
           'ytick.labelsize': 0.6 * fs,
           'axes.linewidth': 1.1,
@@ -158,9 +158,10 @@ def plot_X_H_profile(age=None, X_c=None, tracks=None, mt_index=1, ref_index=2, f
     return fig, ax
 
 
-def plot_BV_profile(age=None, X_c=None, tracks=None, mt_index=3, ref_index=2,
+def plot_BV_profile(age=None, X_c=None, tracks=None, labels=["Mass-gainer", "Single"],
+                    colours=[mass_gainer_col, single_col],
                     lw=1, x_scale="linear", fractional_mass=False, fill=True,
-                    fig=None, ax=None, show=True, label_with="title"):
+                    fig=None, ax=None, show=True, label_with="title", legend_loc="upper right"):
     if age is None and X_c is None:
         raise ValueError("At least one of `age` or `X_c` must not be None")
     if tracks is None:
@@ -168,25 +169,17 @@ def plot_BV_profile(age=None, X_c=None, tracks=None, mt_index=3, ref_index=2,
     if fig is None or ax is None:
         fig, ax = plt.subplots(figsize=(7, 3))
     plt.cla()
-    
-
-    if X_c is None:
-        print(f"Plotting BV profile for age = {age:1.1f} Myr")
-        acc_mod = np.abs(tracks[mt_index].history["star_age"] / 1e6 - age).argmin()
-        non_acc_mod = np.abs(tracks[ref_index].history["star_age"] / 1e6 - age).argmin()
-    else:
-        print(f"Plotting BV profile for X_c = {X_c:1.1f}")
-        acc_mod = np.abs(tracks[mt_index].history["center_h1"] - X_c).argmin()
-        non_acc_mod = np.abs(tracks[ref_index].history["center_h1"] - X_c).argmin()
 
     ax.set_yscale("log")
     ax.set_xscale(x_scale)
     ax.set_ylim(5e1, 1e4)
     
-    for mod, track, tag, col in zip([acc_mod, non_acc_mod],
-                                    [tracks[mt_index], tracks[ref_index]],
-                                    ["Mass-gainer", "Single"],
-                                    [mass_gainer_col, single_col]):
+    for track, tag, col in zip(tracks, labels, colours):
+        if X_c is None:
+            mod = np.abs(track.history["star_age"] / 1e6 - age).argmin()
+        else:
+            mod = np.abs(track.history["center_h1"] - X_c).argmin()
+
         m = track.profiles[mod - 1]["mass"]
         if fractional_mass:
             m = m / m.max()
@@ -198,9 +191,9 @@ def plot_BV_profile(age=None, X_c=None, tracks=None, mt_index=3, ref_index=2,
 
     ax.set_ylabel("Brunt–Väisälä\n[Cycles per day]", fontsize=0.5 * fs)
     ax.set_xlabel(r"Mass [$\rm M_{\odot}$]")
-    ax.legend(loc="upper right", ncol=2, fontsize=0.4 * fs)
+    ax.legend(loc=legend_loc, ncol=2, fontsize=0.4 * fs)
     
-    m_fin = tracks[mt_index].history["star_mass"].iloc[-1]
+    m_fin = tracks[0].history["star_mass"].iloc[-1]
     if label_with == "title":
         ax.set_title(r"Profile for a final mass " + f"~{m_fin:1.1f} " + r"$\rm M_{\odot}$ star"\
                         + (f' at {age:1.1f} Myr' if X_c is None else r" with $X_c =$" + f' {X_c:1.2f}'))
