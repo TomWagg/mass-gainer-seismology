@@ -71,7 +71,7 @@ def get_eigenfunctions(track, profile_number):
         eig_i = pd.read_table(os.path.join(eig_dir, fname), sep='\s+', skiprows=5)
         sph_deg, rad_ord = fname.split('_')
         eigs[(int(sph_deg), 'x')] = eig_i['x']
-        eigs[(int(sph_deg), int(rad_ord))] = eig_i[['Re(xi_r)', 'Re(xi_h)']]
+        eigs[(int(sph_deg), int(rad_ord))] = eig_i[['Re(xi_r)', 'Re(xi_h)', 'dE_dx']]
     return eigs
 
 def get_core_boundary(track, mod):
@@ -84,9 +84,9 @@ def get_core_boundary(track, mod):
 """Then the actual plotting functions"""
 
 
-def simple_hr(track=None, df=None, ylabel=r'Luminosity $\log_{10}(\mathbf{L/L_{\odot}})$',
+def simple_hr(track=None, df=None, ylabel=r'Luminosity $\log_{10}(L/{\rm L_{\odot}})$',
               cbar_var="center_he4", cbar_label=r"$X_{\rm He, center}$", trim_pre_ms=True,
-              fig=None, ax=None, show=True, add_axes_info=False, plot_line=True, 
+              fig=None, ax=None, show=True, add_axes_info=False, plot_line=True, line_colour="lightgrey",
               cbar_loc=[0.38, 0.025, 0.6, 0.025], annotate_start=None, annotate_end=None, R_levels=None,
               **kwargs):
     new_fig = (fig is None or ax is None)
@@ -106,19 +106,19 @@ def simple_hr(track=None, df=None, ylabel=r'Luminosity $\log_{10}(\mathbf{L/L_{\
     c = df[cbar_var] if cbar_var is not None else None
     
     if plot_line:
-        ax.plot(df['log_Teff'], df['log_L'], color="lightgrey", zorder=-1)
+        ax.plot(df['log_Teff'], df['log_L'], color=line_colour, zorder=-1)
     ax.scatter(df['log_Teff'], df['log_L'], c=c, **kwargs)
 
     if annotate_start is not None:
-        ax.annotate(annotate_start, xy=(df['log_Teff'].iloc[0], df['log_L'].iloc[0]), color="lightgrey",
+        ax.annotate(annotate_start, xy=(df['log_Teff'].iloc[0], df['log_L'].iloc[0]), color=line_colour,
                     ha="right", va="top", fontsize=0.5*fs)
     if annotate_end is not None:
-        ax.annotate(annotate_end, xy=(df['log_Teff'].iloc[-1], df['log_L'].iloc[-1]), color="lightgrey",
+        ax.annotate(annotate_end, xy=(df['log_Teff'].iloc[-1], df['log_L'].iloc[-1]), color=line_colour,
                     ha="left", va="bottom", fontsize=0.5*fs)
     
     if new_fig or add_axes_info:
         ax.invert_xaxis()
-        ax.set_xlabel(r'Effective temperature $\log_{10}(\mathbf{T_{eff}/K})$')
+        ax.set_xlabel(r'Effective temperature $\log_{10}(T_{\rm eff}/{\rm K})$')
         ax.set_ylabel(ylabel)
 
         if cbar_var is not None:
@@ -194,7 +194,7 @@ def plot_X_H_profile(age=None, X_c=None, tracks=None, labels=["Mass-gainer", "Si
 
 def plot_BV_profile(age=None, X_c=None, tracks=None, labels=["Mass-gainer", "Single"],
                     colours=[mass_gainer_col, single_col],
-                    lw=1, x_scale="linear", fractional_mass=False, fill=True,
+                    lw=1, x_scale="linear", fractional_mass=False, fractional_radius=False, fill=True,
                     fig=None, ax=None, show=True, label_with="title", legend_loc="upper right"):
     if age is None and X_c is None:
         raise ValueError("At least one of `age` or `X_c` must not be None")
@@ -213,6 +213,9 @@ def plot_BV_profile(age=None, X_c=None, tracks=None, labels=["Mass-gainer", "Sin
         m = track.profiles[mod - 1]["mass"]
         if fractional_mass:
             m = m / m.max()
+
+        if fractional_radius:
+            m = 10**(track.profiles[mod - 1]["logR"]) / 10**(track.profiles[mod - 1]["logR"].max())
         
         brunt = track.profiles[mod - 1]["brunt_N"] * ((2 * np.pi * u.Hz).to(u.day**(-1))).value
         ax.plot(m, brunt, lw=lw, color=col, label=tag, zorder=4)
@@ -220,7 +223,11 @@ def plot_BV_profile(age=None, X_c=None, tracks=None, labels=["Mass-gainer", "Sin
             ax.fill_between(m, ax.get_ylim()[0], brunt, color=col, alpha=0.2, zorder=4)
 
     ax.set_ylabel("Brunt–Väisälä\n[Cycles per day]", fontsize=0.5 * fs)
-    ax.set_xlabel(r"Mass [$\rm M_{\odot}$]")
+
+    if fractional_radius:
+        ax.set_xlabel(r"Fractional Radius, $r / R$")
+    else:
+        ax.set_xlabel(r"Mass [$\rm M_{\odot}$]")
     ax.legend(loc=legend_loc, ncol=2, fontsize=0.4 * fs)
     
     m_fin = tracks[0].history["star_mass"].iloc[-1]
@@ -239,6 +246,25 @@ def plot_BV_profile(age=None, X_c=None, tracks=None, labels=["Mass-gainer", "Sin
     return fig, ax
 
 
+def get_delta_p(track, mod=None, X_c=None, age=None):
+    if age is None and X_c is None and mod is None:
+        raise ValueError("At least one of `age` or `X_c` or `mod` must not be None")
+    if mod is None:
+        mod = find_closest_model_number(track=track, age=age, X_c=X_c)
+    df = track.freqs[mod - 1]
+    df = df[(df["l"] == 1) & (df["m"] == 0)]# & (df["n_p"] == 0)]
+    mixed_modes = df[df["n_p"] > 0]
+    duplicates = df[df["n_g"].isin(mixed_modes["n_g"])]
+    drop_these = duplicates[duplicates["n_p"] == 0].index
+
+    df = df.drop(index=drop_these)
+            
+    periods = 1 / df["Re(freq)"].values * u.day
+    ng = df["n_g"].values
+    delta_p  = periods[:-1] - periods[1:]
+    return periods[:-1], ng[:-1], delta_p
+
+
 def plot_period_spacing(age=None, X_c=None, tracks=None, labels=["Mass-gainer", "Single"],
                         colours=[mass_gainer_col, single_col], legend_loc="upper left", label_with="an",
                         x_var="period", label_modes=False, xlims=None, ylims=None, divide_delta_n=False,
@@ -251,33 +277,20 @@ def plot_period_spacing(age=None, X_c=None, tracks=None, labels=["Mass-gainer", 
     plt.cla()
     
     for track, tag, col in zip(tracks, labels, colours):
-        
         mod = find_closest_model_number(track=track, age=age, X_c=X_c)
-
-        
-        df = track.freqs[mod - 1]
-        df = df[(df["l"] == 1) & (df["m"] == 0)]# & (df["n_p"] == 0)]
-        mixed_modes = df[df["n_p"] > 0]
-        duplicates = df[df["n_g"].isin(mixed_modes["n_g"])]
-        drop_these = duplicates[duplicates["n_p"] == 0].index
-
-        df = df.drop(index=drop_these)
-                
-        periods = 1 / df["Re(freq)"].values * u.day
-        ng = df["n_g"].values
-        delta_p  = periods[:-1] - periods[1:]
+        periods, ng, delta_p = get_delta_p(track=track, mod=mod)
 
         if divide_delta_n:
-            delta_n = ng[:-1] - ng[1:]
+            delta_n = ng - ng[1:]
             delta_n[delta_n == 0] = 1
             delta_p /= delta_n
 
         x_vals = periods if x_var == "period" else -ng
     
         if label_modes:
-            ax.plot(x_vals[:-1], delta_p, label=tag, color=col)
+            ax.plot(x_vals, delta_p, label=tag, color=col)
         else:
-            ax.plot(x_vals[:-1], delta_p, marker="o", label=tag, color=col)
+            ax.plot(x_vals, delta_p, marker="o", label=tag, color=col)
 
         if label_modes:
             for i in range(len(delta_p)):
@@ -319,39 +332,82 @@ def plot_period_spacing(age=None, X_c=None, tracks=None, labels=["Mass-gainer", 
     return fig, ax, ng, periods
 
 
-def plot_eigs(track, sph_deg, rad_ord, mod=None, age=None, X_c=None, show=True):
+def plot_eigs(tracks, sph_deg, rad_ord, which="horizontal", colours=[mass_gainer_col, single_col],
+              labels=["Mass-gainer", "Single"], difference=False,
+              x_range=None, mod=None, age=None, X_c=None, lw=1,
+              plot_core=True, fig=None, ax=None, show=True):
     if age is None and X_c is None and mod is None:
         raise ValueError("At least one of `age` or `X_c` or `mod` must not be None")
     
-    if mod is None:
+    if fig is None or ax is None:
+        fig, ax = plt.subplots(figsize=(9, 4))
+
+    if isinstance(rad_ord, int):
+        rad_ord = [rad_ord]
+    if not isinstance(tracks, (list, np.ndarray)):
+        tracks = [tracks]
+    
+    for track, col, label in zip(tracks, colours, labels):
         mod = find_closest_model_number(track=track, age=age, X_c=X_c)
+        eigs = get_eigenfunctions(track, mod)
+        
+        x = eigs[(sph_deg, 'x')]
+        x_mask = np.repeat(True, len(x)) if x_range is None else (x > x_range[0]) & (x < x_range[-1])
+        
+        if difference:
+            eig_low = eigs[(sph_deg, rad_ord[0])]
+            eig_high = eigs[(sph_deg, rad_ord[1])]
+            if which == "enorm":
+                ax.plot(x[x_mask], eig_high['dE_dx'][x_mask] - eig_low['dE_dx'][x_mask],
+                        lw=lw, zorder=11, color=col, label=label)
+            else:
+                if which == "radial" or which == "both":
+                    ax.plot(x[x_mask], eig_high['Re(xi_r)'][x_mask] - eig_low['Re(xi_r)'][x_mask],
+                            color=col, label=label, lw=lw, zorder=11)
+                if which == "horizontal" or which == "both": 
+                    ax.plot(x[x_mask], eig_high['Re(xi_h)'][x_mask] - eig_low['Re(xi_h)'][x_mask],
+                            color=col, label=label, lw=lw, zorder=10)
+        else:
+            for n in rad_ord:
+                eig = eigs[(sph_deg, n)]
+                label = f'n = {n}'
+                if which == "enorm":
+                    ax.plot(x[x_mask], eig['dE_dx'][x_mask], lw=lw, zorder=11, color=col, label=label)
+                    # ax.fill_between(x[x_mask], 0, eig['dE_dx'][x_mask], lw=lw, zorder=11, color=col, label=label, alpha=0.4)
+                else:
+                    if which == "radial" or which == "both":
+                        ax.plot(x[x_mask], eig['Re(xi_r)'][x_mask],
+                                label=label if which != "both" else label + " (radial)", lw=lw, zorder=11)
+                    if which == "horizontal" or which == "both": 
+                        ax.plot(x[x_mask], eig['Re(xi_h)'][x_mask],
+                                label=label if which != "both" else label + " (horizontal)", lw=lw, zorder=10)
     
-    fig, ax = plt.subplots(figsize=(9, 4))
+    if x_range is None:
+        ax.set_xlim([0, 1])
+    else:
+        ax.set_xlim(x_range)
+    # ax.set_ylim([-20, 20])
     
-    eigs = get_eigenfunctions(track, mod)
-    
-    x   = eigs[(sph_deg, 'x')]
-    eig = eigs[(sph_deg, rad_ord)]
-    
-    ax.plot(x, eig['Re(xi_r)'], label='radial',     lw=2, zorder=11)
-    ax.plot(x, eig['Re(xi_h)'], label='horizontal', lw=2, zorder=10)
-    
-    ax.set_xlim([0, 1])
-    ax.set_ylim([-20, 20])
-    
-    core = get_core_boundary(track, mod)
-    ax.axvspan(0, core, ls='dotted', color="lightgrey", alpha=0.5)
-    ax.axvline(core, ls='dotted', color="lightgrey")
-    ax.annotate("Convective\nCore", xy=(core / 2, ax.get_ylim()[-1] * 0.9), ha="center", va="top", color="grey")
+    if plot_core:
+        core = get_core_boundary(track, mod)
+        ax.axvspan(0, core, ls='dotted', color="lightgrey", alpha=0.5)
+        ax.axvline(core, ls='dotted', color="lightgrey")
+        ax.annotate("Convective\nCore", xy=(core / 2, ax.get_ylim()[-1] * 0.9), ha="center", va="top", color="grey", rotation=90)
     
     ax.set_xlabel(r'Fractional radius $r/R$')
-    ax.set_ylabel('Normalized\neigenfunction ' + r'$\xi$')
-    
-    ax.axhline(0, ls='dotted', color="lightgrey")
+
+    if which == "enorm":
+        ax.set_ylabel('Differential Inertia', fontsize=0.5*fs)
+    else:
+        ax.set_ylabel('Normalized\neigenfunction ' + r'$\xi$', fontsize=0.5*fs)
+        ax.axhline(0, ls='dotted', color="lightgrey")
     
     X_c = track.history.loc[mod - 1]["center_h1"]
-    ax.set_title(r'Eigenfunctions at $X_c=$' + f'{X_c:1.3f} ' + r'($\ell = $' + f'{sph_deg}, ' + r'$n = $' + f'{rad_ord})')
-    ax.legend(loc='lower left')
+    ax.annotate((f'Age = {age:1.1f} Myr' if X_c is None else rf"$X_c = {{{X_c:1.2f}}}$") + '' if len(rad_ord) > 1 else ('\n' + rf"$(\ell = {{{sph_deg}}}, n = {{{rad_ord[0] if len(rad_ord) == 1 else rad_ord}}})$"),
+                xy=(0.5, 0.98), xycoords="axes fraction", ha="center", va="top", fontsize=0.5*fs)
+    
+    if which == "both" or len(rad_ord) > 1:
+        ax.legend(loc='best')
 
     if show:
         plt.show()
