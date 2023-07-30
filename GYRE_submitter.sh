@@ -103,7 +103,7 @@ if [ $RESOLUTION -gt 0 ]; then
 /
 "
 else
-    N_FREQ=200
+    N_FREQ=1000
     GRID="
 &grid
     w_ctr = 10
@@ -120,7 +120,7 @@ if [ $EIGENF -gt 0 ]; then
     SAVE=1
     MODE_ITEM_LIST="detail_file_format = 'TXT'
     detail_template = '%L_%N'
-    detail_item_list = 'M_star,R_star,l,n_pg,n_p,n_g,freq,E,E_p,E_g,E_norm,M_r,x,xi_r,xi_h'"
+    detail_item_list = 'M_star,R_star,l,n_pg,n_p,n_g,freq,E,E_p,E_g,E_norm,M_r,x,xi_r,xi_h,dE_dx'"
 fi
 
 ## Create a directory for the results and go there
@@ -150,7 +150,7 @@ $MODES
 /
 
 &num
-    diff_scheme = 'MAGNUS_GL6'
+    diff_scheme = 'MAGNUS_GL4'
 /
 
 &scan
