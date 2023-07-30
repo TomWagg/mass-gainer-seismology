@@ -149,6 +149,7 @@ def simple_hr(track=None, df=None, ylabel=r'Luminosity $\log_{10}(L/{\rm L_{\odo
 def plot_X_H_profile(age=None, X_c=None, tracks=None, labels=["Mass-gainer", "Single"],
                     colours=[mass_gainer_col, single_col], fig=None, ax=None, show=True,
                      label_with="title", fill=False):
+    print(age, X_c, tracks, labels, colours, fig, ax, show, label_with, fill)
     if age is None and X_c is None:
         raise ValueError("At least one of `age` or `X_c` must not be None")
     if tracks is None:
@@ -180,7 +181,7 @@ def plot_X_H_profile(age=None, X_c=None, tracks=None, labels=["Mass-gainer", "Si
     if label_with == "title":
         ax.set_title(r"$X_H$ profile for a final mass " + f"~{m_fin:1.1f} " + r"$\rm M_{\odot}$ star"\
                     + (f' at {age:1.1f} Myr' if X_c is None else r" with $X_c =$" + f' {X_c:1.2f}'))
-    else:
+    elif label_with == "an":
         ax.annotate(f'Age = {age:1.1f} Myr' if X_c is None else r"$X_c =$" + f' {X_c:1.2f}',
                     xy=(0.02, 0.95), xycoords="axes fraction", va="top", fontsize=0.5*fs)
 
