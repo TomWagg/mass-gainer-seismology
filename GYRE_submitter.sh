@@ -103,7 +103,7 @@ if [ $RESOLUTION -gt 0 ]; then
 /
 "
 else
-    N_FREQ=1000
+    N_FREQ=2000
     GRID="
 &grid
     w_ctr = 10

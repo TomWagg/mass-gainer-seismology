@@ -246,7 +246,7 @@ def plot_BV_profile(age=None, X_c=None, tracks=None, labels=["Mass-gainer", "Sin
     return fig, ax
 
 
-def get_delta_p(track, mod=None, X_c=None, age=None):
+def get_delta_p(track, mod=None, X_c=None, age=None, drop_duplicate_ng=True):
     if age is None and X_c is None and mod is None:
         raise ValueError("At least one of `age` or `X_c` or `mod` must not be None")
     if mod is None:
@@ -258,6 +258,9 @@ def get_delta_p(track, mod=None, X_c=None, age=None):
     drop_these = duplicates[duplicates["n_p"] == 0].index
 
     df = df.drop(index=drop_these)
+
+    if drop_duplicate_ng:
+        df = df.drop_duplicates(subset="n_g", keep="last")
             
     periods = 1 / df["Re(freq)"].values * u.day
     ng = df["n_g"].values
@@ -268,22 +271,25 @@ def get_delta_p(track, mod=None, X_c=None, age=None):
 def plot_period_spacing(age=None, X_c=None, tracks=None, labels=["Mass-gainer", "Single"],
                         colours=[mass_gainer_col, single_col], legend_loc="upper left", label_with="an",
                         x_var="period", label_modes=False, xlims=None, ylims=None, divide_delta_n=False,
-                        fig=None, ax=None, show=True):
+                        drop_duplicate_ng=True, fig=None, ax=None, show=True):
     if age is None and X_c is None:
         raise ValueError("At least one of `age` or `X_c` must not be None")
     
     if fig is None or ax is None:
         fig, ax = plt.subplots(figsize=(7, 3))
     plt.cla()
+
+    delta_p_max = -1
     
     for track, tag, col in zip(tracks, labels, colours):
         mod = find_closest_model_number(track=track, age=age, X_c=X_c)
-        periods, ng, delta_p = get_delta_p(track=track, mod=mod)
+        periods, ng, delta_p = get_delta_p(track=track, mod=mod, drop_duplicate_ng=drop_duplicate_ng)
 
         if divide_delta_n:
-            delta_n = ng - ng[1:]
+            delta_n = np.diff(ng)
             delta_n[delta_n == 0] = 1
-            delta_p /= delta_n
+            delta_n = np.concatenate((delta_n, [-1]))
+            delta_p /= -delta_n
 
         x_vals = periods if x_var == "period" else -ng
     
@@ -299,6 +305,7 @@ def plot_period_spacing(age=None, X_c=None, tracks=None, labels=["Mass-gainer", 
                             bbox=dict(boxstyle="circle", facecolor="white", ec=col))
 
         aps = asymptotic_period_spacing(track.profiles[mod - 1]).to(u.day).value
+        delta_p_max = max(delta_p_max, np.max(np.abs(delta_p.value - aps)))
         ax.axhline(aps, color=col, alpha=0.5, linestyle="dotted", zorder=-1)#, label=f"Expected asymptotic spacing ({tag})")
 
     ax.set_xlabel(r"Period, $P \, [\rm days]$" if x_var == "period" else r"$k$ (g-modes)")
@@ -317,14 +324,14 @@ def plot_period_spacing(age=None, X_c=None, tracks=None, labels=["Mass-gainer", 
 
     if ylims is not None:
         if ylims == "auto":
-            ax.set_ylim(aps - 0.04, aps + 0.04)
+            ax.set_ylim(aps - delta_p_max * 2, aps + delta_p_max * 2)
         else:
             ax.set_ylim(ylims)
 
     if xlims is not None:
         ax.set_xlim(xlims)
 
-    ax.legend(loc=legend_loc, fontsize=0.5 * fs)
+    ax.legend(loc=legend_loc, fontsize=0.5 * fs, ncols=2)
     
     if show:
         plt.show()
