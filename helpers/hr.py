@@ -19,7 +19,8 @@ def add_singles_tracks(fig, ax, tracks, Ms=None, colour="lightgrey", an_every=0.
 def simple_hr(track=None, df=None, ylabel=r'Luminosity $\log_{10}(L/{\rm L_{\odot}})$',
               cbar_var="center_he4", cbar_label=r"$X_{\rm He, center}$", trim_pre_ms=True,
               fig=None, ax=None, show=True, add_axes_info=False, plot_line=True, line_colour="lightgrey",
-              cbar_loc=[0.38, 0.025, 0.6, 0.025], annotate_start=None, annotate_end=None, R_levels=None,
+              cbar_loc=[0.38, 0.025, 0.6, 0.025], inset_cbar=True,
+              annotate_start=None, annotate_end=None, R_levels=None,
               **kwargs):
     new_fig = (fig is None or ax is None)
     if new_fig:
@@ -54,8 +55,11 @@ def simple_hr(track=None, df=None, ylabel=r'Luminosity $\log_{10}(L/{\rm L_{\odo
         ax.set_ylabel(ylabel)
 
         if cbar_var is not None:
-            inset_ax = ax.inset_axes(cbar_loc)
-            fig.colorbar(ax.collections[0], label=cbar_label, cax=inset_ax, orientation="horizontal", location="top")
+            if inset_cbar:
+                inset_ax = ax.inset_axes(cbar_loc)
+                fig.colorbar(ax.collections[0], label=cbar_label, cax=inset_ax, orientation="horizontal", location="top")
+            else:
+                fig.colorbar(ax.collections[0], label=cbar_label)
     
     if R_levels is not None:
         T_range = np.logspace(*ax.get_xlim(), 1000)
