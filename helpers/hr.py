@@ -13,7 +13,7 @@ def add_singles_tracks(fig, ax, tracks, Ms=None, colour="lightgrey", an_every=0.
         folder = f"M_{M:1.1f}"
         ans = fr"$M = {{{M:1.1f}}} {{\rm M_\odot}}$" if M.round(1) % an_every == 0.0 else None
         fig, ax = simple_hr(tracks[folder], fig=fig, ax=ax, show=False, cbar_var=None,
-                            annotate_start=ans, s=0, line_colour=colour)
+                            annotate_start=ans, s=0, line_colour=colour, rasterized=True)
     return fig, ax
 
 def simple_hr(track=None, df=None, ylabel=r'Luminosity $\log_{10}(L/{\rm L_{\odot}})$',
