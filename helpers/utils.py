@@ -24,7 +24,7 @@ single_col = plt.get_cmap("magma")(0.8)
 
 __all__ = ["fs", "params", "mass_gainer_col", "single_col", "set_styles", "find_closest_model_number",
            "get_pi_0", "asymptotic_period_spacing", "get_radius", "get_eigenfunctions", "get_core_boundary",
-           "get_delta_p", "append_surface_He_abundance"]
+           "get_delta_p", "append_surface_He_abundance", "create_GYRE_bash"]
 
 def set_styles():
     plt.rc('font', family='serif')
@@ -109,3 +109,11 @@ def get_delta_p(track, mod=None, X_c=None, age=None, drop_duplicate_ng=True):
 def append_surface_He_abundance(track):
     surface_he = [track.profiles[i].iloc[0]["y_mass_fraction_He"] for i in range(len(track.profiles))]
     track.history.loc[:, "surface_he"] = surface_he
+
+
+def create_GYRE_bash(mods=None, track=None, X_c=None, procs=6, script="/afs/mpa/temp/tomwagg/kavli/GYRE_submitter.sh"):
+    if mods is None:
+        mods = find_closest_model_number(track=track, X_c=X_c)
+    mods_strings = [f"profile{mod}.data.GYRE" for mod in mods]
+    return "echo -n '" + ','.join(mods_strings) + "' | xargs -d ',' -P " + str(min(procs, len(mods_strings)))\
+        + " -I {} " + script + " -i {} -t 1 -e"
