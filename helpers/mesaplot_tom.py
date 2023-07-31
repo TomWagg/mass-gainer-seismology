@@ -271,7 +271,7 @@ def get_delta_p(track, mod=None, X_c=None, age=None, drop_duplicate_ng=True):
 def plot_period_spacing(age=None, X_c=None, tracks=None, labels=["Mass-gainer", "Single"],
                         colours=[mass_gainer_col, single_col], legend_loc="upper left", label_with="an",
                         x_var="period", label_modes=False, xlims=None, ylims=None, divide_delta_n=False,
-                        drop_duplicate_ng=True, fig=None, ax=None, show=True):
+                        drop_duplicate_ng=True, fig=None, ax=None, show=True, ylim_auto_fac=2):
     if age is None and X_c is None:
         raise ValueError("At least one of `age` or `X_c` must not be None")
     
@@ -324,7 +324,7 @@ def plot_period_spacing(age=None, X_c=None, tracks=None, labels=["Mass-gainer", 
 
     if ylims is not None:
         if ylims == "auto":
-            ax.set_ylim(aps - delta_p_max * 2, aps + delta_p_max * 2)
+            ax.set_ylim(aps - delta_p_max * ylim_auto_fac, aps + delta_p_max * ylim_auto_fac)
         else:
             ax.set_ylim(ylims)
 
