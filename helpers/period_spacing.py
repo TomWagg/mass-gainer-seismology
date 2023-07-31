@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import astropy.units as u
 
 from utils import get_delta_p, mass_gainer_col, single_col,\
     find_closest_model_number, asymptotic_period_spacing, fs
@@ -57,7 +58,8 @@ def plot_period_spacing(age=None, X_c=None, tracks=None, labels=["Mass-gainer", 
         ax.annotate(f'Age = {age:1.1f} Myr' if X_c is None else r"$X_c =$" + f' {X_c:1.2f}',
                     xy=(0.02, 0.95), xycoords="axes fraction", va="top", fontsize=0.5*fs)
 
-    ax.annotate(r"$(l = 1, m = 0)$ g modes", xy=(0.02, 0.02), xycoords="axes fraction", va="bottom")
+    ax.annotate(r"$(l = 1, m = 0)$ g modes", xy=(0.02, 0.02), xycoords="axes fraction",
+                va="bottom", fontsize=0.5*fs)
 
     if ylims is not None:
         if ylims == "auto":
