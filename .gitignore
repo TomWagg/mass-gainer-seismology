@@ -178,3 +178,4 @@ photos
 *.bbl
 
 output/*/*/*
+.vscode/
