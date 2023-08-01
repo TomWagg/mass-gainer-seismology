@@ -111,9 +111,14 @@ def append_surface_He_abundance(track):
     track.history.loc[:, "surface_he"] = surface_he
 
 
-def create_GYRE_bash(mods=None, track=None, X_c=None, procs=6, script="/afs/mpa/temp/tomwagg/kavli/GYRE_submitter.sh"):
+def create_GYRE_bash(mods=None, track=None, X_c=None, procs=6,
+                     script="/afs/mpa/temp/tomwagg/kavli/GYRE_submitter.sh", change_folders=False):
     if mods is None:
         mods = find_closest_model_number(track=track, X_c=X_c)
     mods_strings = [f"profile{mod}.data.GYRE" for mod in mods]
-    return "echo -n '" + ','.join(mods_strings) + "' | xargs -d ',' -P " + str(min(procs, len(mods_strings)))\
+    command = "echo -n '" + ','.join(mods_strings) + "' | xargs -d ',' -P "\
+        + str(min(procs, len(mods_strings)))\
         + " -I {} " + script + " -i {} -t 1 -e"
+    if change_folders:
+        command = f"cd {track.dir}; " + command + "; cd -;"
+    print(command)
