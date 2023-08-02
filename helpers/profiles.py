@@ -8,8 +8,8 @@ from utils import find_closest_model_number, mass_gainer_col, single_col, fs,\
 __all__ = ["plot_X_H_profile", "plot_BV_profile", "plot_eigs"]
 
 def plot_X_H_profile(age=None, X_c=None, tracks=None, labels=["Mass-gainer", "Single"],
-                    colours=[mass_gainer_col, single_col], fig=None, ax=None, show=True,
-                     label_with="title", fill=False):
+                     colours=[mass_gainer_col, single_col], fig=None, ax=None, show=True,
+                     label_with="title", annotate_col="lightgrey"):
     if age is None and X_c is None:
         raise ValueError("At least one of `age` or `X_c` must not be None")
     if tracks is None:
@@ -33,8 +33,8 @@ def plot_X_H_profile(age=None, X_c=None, tracks=None, labels=["Mass-gainer", "Si
 
     m_fin = tracks[0].history["star_mass"].iloc[-1]
     ax.annotate(f"Extends to {m_fin:1.1f} " + r"$\rm M_{\odot}$", xy=(1, 0.5), xytext=(0.96, 0.5),
-                xycoords="axes fraction", ha="right", va="center", color="lightgrey",
-                arrowprops=dict(arrowstyle="-|>", color="lightgrey"), fontsize=0.4*fs)
+                xycoords="axes fraction", ha="right", va="center", color=annotate_col,
+                arrowprops=dict(arrowstyle="-|>", color=annotate_col), fontsize=0.4*fs)
 
     ax.set_ylim(0, 0.7)
     ax.set_xlim(0, 1.1)
