@@ -106,7 +106,7 @@ def plot_BV_profile(age=None, X_c=None, tracks=None, labels=["Mass-gainer", "Sin
     else:
         ax.annotate(f'Age = {age:1.1f} Myr' if X_c is None else r"$X_c =$" + f' {X_c:1.2f}',
                     xy=(0.02, 0.95), xycoords="axes fraction", va="top", fontsize=0.5*fs,
-                    bbox=dict(boxstyle="round", pad=0, fc="white", ec="white"))
+                    bbox=dict(boxstyle="round", pad=0, fc="white", ec="white"), zorder=10)
     
     plt.tight_layout()
     
