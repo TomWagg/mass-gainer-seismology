@@ -45,7 +45,8 @@ def plot_X_H_profile(age=None, X_c=None, tracks=None, labels=["Mass-gainer", "Si
                     + (f' at {age:1.1f} Myr' if X_c is None else r" with $X_c =$" + f' {X_c:1.2f}'))
     elif label_with == "an":
         ax.annotate(f'Age = {age:1.1f} Myr' if X_c is None else r"$X_c =$" + f' {X_c:1.2f}',
-                    xy=(0.02, 0.95), xycoords="axes fraction", va="top", fontsize=0.5*fs)
+                    xy=(0.02, 0.95), xycoords="axes fraction", va="top", fontsize=0.5*fs,
+                    bbox=dict(boxstyle="round", pad=0, fc="white", ec="white"))
 
     plt.tight_layout()
 
@@ -104,7 +105,8 @@ def plot_BV_profile(age=None, X_c=None, tracks=None, labels=["Mass-gainer", "Sin
                         + (f' at {age:1.1f} Myr' if X_c is None else r" with $X_c =$" + f' {X_c:1.2f}'))
     else:
         ax.annotate(f'Age = {age:1.1f} Myr' if X_c is None else r"$X_c =$" + f' {X_c:1.2f}',
-                    xy=(0.02, 0.95), xycoords="axes fraction", va="top", fontsize=0.5*fs)
+                    xy=(0.02, 0.95), xycoords="axes fraction", va="top", fontsize=0.5*fs,
+                    bbox=dict(boxstyle="round", pad=0, fc="white", ec="white"))
     
     plt.tight_layout()
     

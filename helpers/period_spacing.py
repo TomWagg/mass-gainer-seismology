@@ -56,10 +56,11 @@ def plot_period_spacing(age=None, X_c=None, tracks=None, labels=["Mass-gainer", 
                      + (f' at {age:1.1f} Myr' if X_c is None else r" with $X_c =$" + f' {X_c:1.2f}'))
     else:
         ax.annotate(f'Age = {age:1.1f} Myr' if X_c is None else r"$X_c =$" + f' {X_c:1.2f}',
-                    xy=(0.02, 0.95), xycoords="axes fraction", va="top", fontsize=0.5*fs)
+                    xy=(0.02, 0.95), xycoords="axes fraction", va="top", fontsize=0.5*fs,
+                    bbox=dict(boxstyle="round", pad=0, fc="white", ec="white"))
 
     ax.annotate(r"$(l = 1, m = 0)$ g modes", xy=(0.02, 0.02), xycoords="axes fraction",
-                va="bottom", fontsize=0.5*fs)
+                va="bottom", fontsize=0.5*fs, bbox=dict(boxstyle="round", pad=0, fc="white", ec="white"))
 
     if ylims is not None:
         if ylims == "auto":
