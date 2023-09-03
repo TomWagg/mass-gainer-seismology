@@ -4,7 +4,31 @@ import astropy.units as u
 
 from utils import fs, get_radius
 
-__all__ = ["simple_hr", "add_singles_tracks"]
+__all__ = ["simple_hr", "add_singles_tracks", "get_hr_position"]
+
+
+def get_hr_position(track, pos):
+    df = track.history
+    if pos == "zams":
+        df = df.loc[df.center_h1 <= df.center_h1.max() - 0.005]
+        return df.iloc[0]["log_Teff"], df.iloc[0]["log_L"]
+    elif pos == "mt_start":
+        df = df.loc[df["log_abs_mdot"] > -8]
+        return df.iloc[0]["log_Teff"], df.iloc[0]["log_L"]
+    elif pos == "closest_approach":
+        df = df.loc[df["log_abs_mdot"] > -8]
+        df = df.loc[df["log_L"] == df["log_L"].min()]
+        return df.iloc[0]["log_Teff"], df.iloc[0]["log_L"]
+    elif pos == "mt_end":
+        df = df.loc[df["log_abs_mdot"] > -8]
+        return df.iloc[-1]["log_Teff"], df.iloc[-1]["log_L"]
+    elif pos == "cheb":
+        mt_end_ind = df.loc[df["log_abs_mdot"] > -8].index[-1] + 1
+        df = df.iloc[mt_end_ind:]
+        df = df.loc[df.log_L == df.log_L.min()]
+        return df.iloc[0]["log_Teff"], df.iloc[0]["log_L"]
+    else:
+        raise ValueError("Invalid pos")
 
 def add_singles_tracks(fig, ax, tracks, Ms=None, colour="lightgrey", an_every=0.5):
     if Ms is None:
@@ -57,7 +81,9 @@ def simple_hr(track=None, df=None, ylabel=r'Luminosity $\log_{10}(L/{\rm L_{\odo
         if cbar_var is not None:
             if inset_cbar:
                 inset_ax = ax.inset_axes(cbar_loc)
-                fig.colorbar(ax.collections[0], label=cbar_label, cax=inset_ax, orientation="horizontal", location="top")
+                cb = fig.colorbar(ax.collections[0], cax=inset_ax,
+                                  orientation="horizontal", location="top", extend="min")
+                cb.set_label(label=cbar_label, fontsize=0.6*fs)
             else:
                 fig.colorbar(ax.collections[0], label=cbar_label)
     
