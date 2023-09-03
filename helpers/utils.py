@@ -72,6 +72,7 @@ def get_eigenfunctions(track, profile_number):
             continue
         eig_i = pd.read_table(os.path.join(eig_dir, fname), sep='\s+', skiprows=5)
         sph_deg, rad_ord = fname.split('_')
+        eigs[(int(sph_deg), 'M_r')] = eig_i['M_r']
         eigs[(int(sph_deg), 'x')] = eig_i['x']
         eigs[(int(sph_deg), int(rad_ord))] = eig_i[['Re(xi_r)', 'Re(xi_h)', 'dE_dx']]
     return eigs
