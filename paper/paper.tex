@@ -143,8 +143,10 @@ Our binary model has a donor with an initial mass of 4\msun and an accretor with
 \begin{figure}[htb]
     \centering
     \includegraphics[width=\columnwidth]{figures/HRD_binary_full_labelled.pdf}
-    \caption{\hrd showing the evolution of the binary. Tracks are shown for both the donor and accretor, coloured by the absolute mass transfer rate. We highlight the accretor track with a pink outline. Single star tracks added as background grey curves, with masses from $3$ to $4 \unit{M_\odot}$ in $0.1 \unit{M_\odot}$ intervals. Important points in the evolution are annotated with arrows and described in the text.\mathieu{Mathieu and Selma disagree on HRD}
-    \selma{Mathieu and Selma disagree on HRD}}
+    \includegraphics[width=\columnwidth]{paper/figures/HRD_binary_truncated_labelled.pdf}
+    \caption{\hrd showing the evolution of the binary. Tracks are shown for both the donor and accretor, coloured by the absolute mass transfer rate. We highlight the accretor track with a pink outline. Single star tracks added as background grey curves, with masses from $3$ to $4 \unit{M_\odot}$ in $0.1 \unit{M_\odot}$ intervals. Important points in the evolution are annotated with arrows and described in the text.\mathieu{Add comments on why you prefer 2nd version}
+    \selma{Selma prefers first version as it makes the donor track less distracting}
+    \feedback{Everyone please offer opinions on preferred HRD to show}}
     \label{fig:hrd}
 \end{figure}
 
@@ -392,9 +394,13 @@ We explored a more dense grid of $D_{\rm min}$ models and found that $D_{\rm min
 
 We stress that the qualitative differences between the mass-gainer and single star in the period spacing patterns remain the same for all choices of $D_{\rm min}$ that we explored. To highlight this point we show the period spacing pattern for the model with $D_{\rm min} = 100 \unit{cm^{2}}{s^{-1}}$ in Figure~\ref{fig:period_spacing_mdm100}. Despite slight differences to the exact shape of the pattern, we still find the same features of (i) stronger $\Delta P$ for mass-gainers and (ii) regions in which the period spacing is in-phase and regions in which it is out of phase between the mass-gainer and single star.
 
-\section{\mesa Resolution Tests}\label{app:res_tests}
+\section{\mesa \& \gyre Convergence Tests}\label{app:res_tests}
 \texttt{delta\_mesh\_coeff} time
 
 Tom needs to write/add the plots that show this all holds for a higher resolution.
+
+Vary both mesh and time resolution, show that \bvf plot looks the same.
+
+Also discuss the convergence testing I did on the GYRE frequency scanning range.
 
 \end{document}
