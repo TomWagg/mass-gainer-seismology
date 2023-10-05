@@ -143,14 +143,14 @@ echo "&model
 $MODES
 
 &osc
-    outer_bound = 'JCD'
+    outer_bound = 'VACUUM'
     variables_set = 'JCD'
     inertia_norm = 'BOTH'
     x_ref = 1
 /
 
 &num
-    diff_scheme = 'MAGNUS_GL4'
+    diff_scheme = 'MAGNUS_GL6'
 /
 
 &scan
