@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import astropy.units as u
 
-from utils import fs, get_radius
+from utils import fs, get_radius, find_closest_model_number
 
 __all__ = ["simple_hr", "add_singles_tracks", "get_hr_position"]
 
@@ -44,7 +44,7 @@ def simple_hr(track=None, df=None, ylabel=r'Luminosity $\log_{10}(L/{\rm L_{\odo
               cbar_var="center_he4", cbar_label=r"$X_{\rm He, center}$", trim_pre_ms=True,
               fig=None, ax=None, show=True, add_axes_info=False, plot_line=True, line_colour="lightgrey",
               cbar_loc=[0.38, 0.025, 0.6, 0.025], inset_cbar=True,
-              annotate_start=None, annotate_end=None, R_levels=None,
+              annotate_start=None, annotate_end=None, R_levels=None, mod_range=None, time_step=None,
               **kwargs):
     new_fig = (fig is None or ax is None)
     if new_fig:
@@ -55,6 +55,14 @@ def simple_hr(track=None, df=None, ylabel=r'Luminosity $\log_{10}(L/{\rm L_{\odo
 
     if trim_pre_ms:
         df = df.loc[df.center_h1 <= df.center_h1.max() - 0.005]
+
+    if mod_range is not None:
+        df = df.loc[(df.index >= mod_range[0]) & (df.index < mod_range[1])]
+
+    if time_step is not None:
+        mods = find_closest_model_number(track, age=np.arange(df["star_age"].min() / 1e6, df["star_age"].max() / 1e6, time_step))
+        df = df.loc[mods]
+
 
     if 's' not in kwargs:
         kwargs['s'] = 10
