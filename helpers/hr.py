@@ -30,19 +30,21 @@ def get_hr_position(track, pos):
     else:
         raise ValueError("Invalid pos")
 
-def add_singles_tracks(fig, ax, tracks, Ms=None, colour="lightgrey", an_every=0.5):
+def add_singles_tracks(fig, ax, tracks, Ms=None, colour="lightgrey", linestyle="-", an_every=0.5):
     if Ms is None:
         Ms = np.arange(3.0, 6.1, 0.1)
     for M in Ms:
         folder = f"M_{M:1.1f}"
         ans = fr"$M = {{{M:1.1f}}} {{\rm M_\odot}}$" if M.round(1) % an_every == 0.0 else None
         fig, ax = simple_hr(tracks[folder], fig=fig, ax=ax, show=False, cbar_var=None,
-                            annotate_start=ans, s=0, line_colour=colour, rasterized=True)
+                            annotate_start=ans, s=0, line_colour=colour, rasterized=True,
+                            linestyle=linestyle, line_z=-10)
     return fig, ax
 
 def simple_hr(track=None, df=None, ylabel=r'Luminosity $\log_{10}(L/{\rm L_{\odot}})$',
               cbar_var="center_he4", cbar_label=r"$X_{\rm He, center}$", trim_pre_ms=True,
-              fig=None, ax=None, show=True, add_axes_info=False, plot_line=True, line_colour="lightgrey",
+              fig=None, ax=None, show=True, add_axes_info=False,
+              plot_line=True, line_colour="grey", line_z=-1, linestyle="-",
               cbar_loc=[0.38, 0.025, 0.6, 0.025], inset_cbar=True,
               annotate_start=None, annotate_end=None, R_levels=None, mod_range=None, time_step=None,
               **kwargs):
@@ -71,7 +73,7 @@ def simple_hr(track=None, df=None, ylabel=r'Luminosity $\log_{10}(L/{\rm L_{\odo
     c = df[cbar_var] if cbar_var is not None else None
     
     if plot_line:
-        ax.plot(df['log_Teff'], df['log_L'], color=line_colour, zorder=-1)
+        ax.plot(df['log_Teff'], df['log_L'], color=line_colour, zorder=line_z, linestyle=linestyle)
     ax.scatter(df['log_Teff'], df['log_L'], c=c, **kwargs)
 
     if annotate_start is not None:
