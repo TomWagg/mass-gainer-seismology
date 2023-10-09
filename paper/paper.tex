@@ -149,6 +149,7 @@ In Figure~\ref{fig:hrd} we show the evolution across the \hrd of both the donor 
 
 The evolution of the donor (starting at D1) initially follows the 4\msun single star track, expanding across the main sequence, turning-off and moving across the Hertzsprung gap. During the expansion on the Hertzsprung gap, at point D2, the donor overflows its Roche Lobe and diverges from the single star track, decreasing in luminosity as it transfers mass.
 This decrease in luminosity is a result of the strong thermal disequilibrium of the donor. The radiative donor star shrinks in response to mass transfer. As the star attempts to regain thermal equilibrium by re-expanding, it uses gravitational potential energy, which in turn decreases the surface luminosity (relative to the nuclear luminosity) during the thermal-timescale mass transfer.
+\mathieu{How's this for explaining $L$ decrease?}
 As the mass transfer proceeds the orbit of the binary shrinks, increasing the mass transfer rate until the point of closest approach at D3. Around this time in the evolution we detach the binary as noted explained in Sec.~\ref{sec:model_setup}. However, we also show the future evolution the donor \textit{would} have had without forced detachment of the binary with a grey line. With the reversal of the mass ratio, mass transfer then causes the orbit the widen, decreasing the mass transfer rate and allowing the donor to increase in luminosity once more. Once the orbit widens to such an extent that Roche lobe overflow ceases (at point D4), the donor relaxes on a thermal timescale, before proceeding with helium core burning from point D5 onwards.
 
 The evolution of the accretor (highlighted in pink) follows the 3\msun single star track initially (starting from point A1), but early into its main sequence evolution the donor initiates mass transfer (at point A2). This compresses the underlying layers of the star, rapidly releasing gravitational energy and bringing the accretor out of thermal equilibrium. Given the accretor has a radiative envelope, this causes it to expand and increase in luminosity. Once mass transfer ceases at point A3, the accretor returns to thermal equilibrium at point A4 and proceeds with its main sequence evolution along the 3.5\msun single star track.
@@ -184,7 +185,7 @@ In this Section we demonstrate how the differences in internal structure between
 \begin{figure*}
     \centering
     \includegraphics[width=\textwidth]{figures/BV_profile_all_combo.pdf}
-    \caption{As Figure~\ref{fig:XH_profiles}, but showing the \bvf profile for the same evolutionary timesteps. \textbf{Left:} as a function of mass coordinate, \textbf{right:} as a function of radial coordinate.\tom{try log R for right side}}
+    \caption{As Figure~\ref{fig:XH_profiles}, but showing the \bvf profile for the same evolutionary timesteps. \textbf{Left:} as a function of mass coordinate, \textbf{right:} as a function of radial coordinate.}
     \label{fig:BV_profiles}
 \end{figure*}
 
@@ -245,7 +246,7 @@ We test how incorrect these inferences may be by fitting the period spacing patt
 
 We match the periods of models \textit{independent} of radial order since, in reality, the exact radial order of an observed pulsation is not known a priori. This means that the best fitting period for a given radial order in the mass-gainer model may actually be from an entirely \textit{different} radial order in the single star model. We therefore need to determine the optimal matching between these sets of periods. We make the assumption that the `observed' period spacing pattern is continuous and monotonic in radial order. This simplifies the matching process, as for each single star model we must now only determine the \textit{offset} in radial order, $\epsilon$, from the mass-gainer model, such that a period $P_{{\rm mg}, i}$ in the mass-gainer corresponds to a period $P_{{\rm s}, (i + \epsilon)}$ in the single star.
 
-\mathieu{(from Tom) Is this a clearer explanation?}
+\mathieu{Is this a clearer explanation?}
 
 In summary, we calculate the $\chi^2$ per degree of freedom for each model as
 \begin{equation}
@@ -401,6 +402,9 @@ PC \citep{Potekhin2010}, and Skye \citep{Jermyn2021} EOSes. Radiative opacities 
 \citet{Eggleton1983}. For accretors we include thermohaline mixing once they finish accretion following \citet{Kippenhahn+1980} with an efficiency of $\alpha_{\rm thm} = 1$. We follow the \citet{Kolb+1990} prescription for the mass transfer rate in Roche lobe overflowing binary systems with an implicit scheme.
 
 \section{\mesa \& \gyre Convergence Tests}\label{app:res_tests}
+
+We assessed the numerical convergence of our \mesa models by increasing both the number of timesteps and the number of mesh points. Our default model uses \texttt{delta\_mesh\_coeff}$ = 0.4$ and \texttt{delta\_time\_coeff}$ = 1.0$. We decreases both of these by a factor of two and re-ran our 
+
 \texttt{delta\_mesh\_coeff} time
 
 Tom needs to write/add the plots that show this all holds for a higher resolution.
