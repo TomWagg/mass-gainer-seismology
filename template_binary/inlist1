@@ -1,0 +1,86 @@
+
+&star_job
+
+      mesa_dir = ''
+      show_log_description_at_start = .true.
+
+      pgstar_flag = .false.
+
+/ ! end of star_job namelist
+
+&eos
+  ! eos options
+  ! see eos/defaults/eos.defaults
+
+/ ! end of eos namelist
+
+
+&kap
+  ! kap options
+  ! see kap/defaults/kap.defaults
+  use_Type2_opacities = .true.
+  Zbase = 0.02
+
+/ ! end of kap namelist
+
+
+&controls
+
+      extra_terminal_output_file = 'log_star1' 
+      log_directory = 'LOGS_star1'
+
+      history_interval = 1
+      profile_interval = 1
+      photo_interval = 250
+      max_num_profile_models = 10000
+      write_header_frequency = 10
+
+      ! stopping conditions
+      max_model_number = 10000
+      xa_central_lower_limit_species(1) = 'he4'
+      xa_central_lower_limit(1) = 0.02
+      min_timestep_limit = 1000 !sec
+      
+      ! convection
+      alpha_semiconvection = 0.1
+      use_ledoux_criterion = .true.
+
+      ! mixing
+      set_min_D_mix = .true.
+      mass_lower_limit_for_min_D_mix = 0d0
+      mass_upper_limit_for_min_D_mix = 1d99
+      min_D_mix = 20
+
+      ! asteroseismology
+      write_pulse_data_with_profile = .true.
+      add_atmosphere_to_pulse_data = .true.
+      add_double_points_to_pulse_data = .true.
+      pulse_data_format = 'GYRE'
+
+      ! overshooting
+      overshoot_scheme = 'exponential'
+      overshoot_zone_type = 'burn_H'
+      overshoot_zone_loc = 'core'
+      overshoot_bdy_loc = 'top'
+
+      overshoot_f = 0.01           ! sort of like how far does it extend
+      overshoot_f0 = 0.005         ! sort of like where inside does it start
+
+      ! mesh
+      max_allowed_nz = 10000
+      mesh_delta_coeff = 0.4
+      varcontrol_target = 1d-4
+      min_allowed_varcontrol_target = 1d-5
+      num_cells_for_smooth_gradL_composition_term = 10
+      threshold_for_smooth_gradL_composition_term = 0.02
+      num_cells_for_smooth_brunt_B = 10
+      threshold_for_smooth_brunt_B = 0.1
+
+      ! solver
+      ! options for energy conservation (see MESA V, Section 3)
+      energy_eqn_option = 'dedt'
+      use_gold_tolerances = .true.
+
+      ! output
+
+/ ! end of controls namelist
