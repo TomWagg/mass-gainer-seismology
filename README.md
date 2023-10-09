@@ -1,6 +1,6 @@
 <div align='center'>
   <h1>The Asteroseismic Imprints of Mass Transfer</h1>
-  <h5><ins>Tom Wagg</ins>, Cole Johnston, Earl Bellinger, Mathieu Renzo & Selma de Mink</h5>
+  <h5><ins>Tom Wagg</ins>, Cole Johnston, Earl Bellinger, Mathieu Renzo, Selma de Mink & Rich Townsend</h5>
 
   <a href="https://ui.adsabs.harvard.edu/">
     <img src="https://img.shields.io/badge/read-paper (TODO)-blue"/>
