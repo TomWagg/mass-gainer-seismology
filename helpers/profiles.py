@@ -58,8 +58,9 @@ def plot_X_H_profile(age=None, X_c=None, tracks=None, labels=["Mass-gainer", "Si
 
 def plot_BV_profile(age=None, X_c=None, tracks=None, labels=["Mass-gainer", "Single"],
                     colours=[mass_gainer_col, single_col],
-                    lw=1, x_scale="linear", fractional_mass=False, radius=False, fractional_radius=False,
-                    fill=True, fig=None, ax=None, show=True, label_with="title", legend_loc="upper right"):
+                    lw=1, x_scale="linear", fractional_mass=False, radius=False, log_radius=False,
+                    fractional_radius=False, fill=True, fig=None, ax=None, show=True,
+                    label_with="title", legend_loc="upper right"):
     if age is None and X_c is None:
         raise ValueError("At least one of `age` or `X_c` must not be None")
     if tracks is None:
@@ -80,6 +81,9 @@ def plot_BV_profile(age=None, X_c=None, tracks=None, labels=["Mass-gainer", "Sin
 
         if radius:
             m = 10**(track.profiles[mod - 1]["logR"])
+        
+        if log_radius:
+            m = track.profiles[mod - 1]["logR"]
 
         if fractional_radius:
             m = 10**(track.profiles[mod - 1]["logR"]) / 10**(track.profiles[mod - 1]["logR"].max())
@@ -93,6 +97,8 @@ def plot_BV_profile(age=None, X_c=None, tracks=None, labels=["Mass-gainer", "Sin
 
     if radius:
         ax.set_xlabel(r"Radius [$\rm R_{\odot}$]")
+    elif log_radius:
+        ax.set_xlabel(r"Radius, $\log_{10} (R / {\rm R_{\odot}})$")
     elif fractional_radius:
         ax.set_xlabel(r"Fractional Radius, $r / R$")
     else:
