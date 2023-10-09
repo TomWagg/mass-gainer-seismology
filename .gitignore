@@ -164,9 +164,8 @@ cython_debug/
 !*template/profile_columns.list
 !*template/history_columns.list
 !*template/src
-shmesa.sh
-gyre6freqs.sh
-mesagrid.py
+template*/binary
+template*/star
 
 star
 */LOGS*
