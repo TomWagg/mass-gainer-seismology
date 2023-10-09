@@ -74,17 +74,14 @@
     alpha_semiconvection = 0.1
     use_ledoux_criterion = .true.
 
-    ! thermohaline_coeff = 1000
-    ! thermohaline_option = 'Kippenhahn'
-
   ! mixing
 
     set_min_D_mix = .true.
     mass_lower_limit_for_min_D_mix = 0d0
     mass_upper_limit_for_min_D_mix = 1d99
-    min_D_mix = 1d2
+    min_D_mix = 20
 
-  ! accretion (by default off)
+  ! accretion (by default off) (This is a holdover from initial attempts just making a single star accrete)
     use_other_adjust_mdot = .false.
     x_logical_ctrl(1) = .false.             ! whether to include mass accretion from MT
     x_ctrl(1) = 0.65                        ! central H abundance at which to commence MT
@@ -101,9 +98,6 @@
 
     overshoot_f = 0.01           ! sort of like how far does it extend
     overshoot_f0 = 0.005         ! sort of like where inside does it start
-
-    ! TOM! Think about Claret & Torres 2017
-    ! TOM! Cole says set alpha_sc = 0.1
 
   ! timesteps
 

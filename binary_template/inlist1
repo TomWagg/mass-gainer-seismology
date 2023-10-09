@@ -45,14 +45,11 @@
       alpha_semiconvection = 0.1
       use_ledoux_criterion = .true.
 
-    !   thermohaline_coeff = 1000
-    !   thermohaline_option = 'Kippenhahn'
-
       ! mixing
       set_min_D_mix = .true.
       mass_lower_limit_for_min_D_mix = 0d0
       mass_upper_limit_for_min_D_mix = 1d99
-      min_D_mix = 1d2
+      min_D_mix = 20
 
       ! asteroseismology
       write_pulse_data_with_profile = .true.
@@ -68,10 +65,6 @@
 
       overshoot_f = 0.01           ! sort of like how far does it extend
       overshoot_f0 = 0.005         ! sort of like where inside does it start
-
-      ! timesteps
-    !   delta_lg_star_mass_limit = 1e-3
-    !   delta_lg_star_mass_hard_limit = 2e-3
 
       ! mesh
       max_allowed_nz = 10000
