@@ -12,7 +12,7 @@ def plot_period_spacing(age=None, X_c=None, tracks=None, labels=["Mass-gainer", 
                         colours=[mass_gainer_col, single_col], legend_loc="upper left", label_with="an",
                         x_var="period", label_modes=False, mode_type=True,
                         xlims=None, ylims=None, divide_delta_n=False, drop_duplicate_ng=True,
-                        fig=None, ax=None, show=True, ylim_auto_fac=2):
+                        fig=None, ax=None, show=True, ylim_auto_fac=2, markersize=None, linewidth=1):
     if age is None and X_c is None:
         raise ValueError("At least one of `age` or `X_c` must not be None")
     
@@ -37,7 +37,7 @@ def plot_period_spacing(age=None, X_c=None, tracks=None, labels=["Mass-gainer", 
         if label_modes:
             ax.plot(x_vals, delta_p, label=tag, color=col)
         else:
-            ax.plot(x_vals, delta_p, marker="o", label=tag, color=col)
+            ax.plot(x_vals, delta_p, marker="o", label=tag, color=col, markersize=markersize, linewidth=linewidth)
 
         if label_modes:
             for i in range(len(delta_p)):

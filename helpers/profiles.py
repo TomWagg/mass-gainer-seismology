@@ -9,14 +9,15 @@ __all__ = ["plot_X_H_profile", "plot_BV_profile", "plot_eigs"]
 
 def plot_X_H_profile(age=None, X_c=None, tracks=None, labels=["Mass-gainer", "Single"],
                      colours=[mass_gainer_col, single_col], fig=None, ax=None, show=True,
-                     label_with="title", annotate_col="lightgrey"):
+                     label_with="title", annotate_col="lightgrey", clear=False):
     if age is None and X_c is None:
         raise ValueError("At least one of `age` or `X_c` must not be None")
     if tracks is None:
         raise ValueError("`tracks` cannot be None")
     if fig is None or ax is None:
         fig, ax = plt.subplots(figsize=(7, 3))
-    plt.cla()
+    if clear:
+        plt.cla()
 
     lw = 2
 
