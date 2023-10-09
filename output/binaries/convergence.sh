@@ -1,6 +1,6 @@
 #$ -S /bin/bash
-#$ -e $JOB_ID.$TASK_ID.e
-#$ -o $JOB_ID.$TASK_ID.o
+#$ -e $JOB_ID.e
+#$ -o $JOB_ID.o
 #$ -cwd
 #$ -l h_vmem=10G
 #$ -l h_cpu=15:00:00
@@ -37,6 +37,6 @@ mesa change "inlist2" mesh_delta_coeff 0.2
 mesa change "inlist1" time_delta_coeff 0.5
 mesa change "inlist2" time_delta_coeff 0.5
 
-# ./rn
+./rn
 
 cd -
