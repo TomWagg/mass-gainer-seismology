@@ -69,6 +69,7 @@
       ! mesh
       max_allowed_nz = 10000
       mesh_delta_coeff = 0.4
+      time_delta_coeff = 1.0
       varcontrol_target = 1d-4
       min_allowed_varcontrol_target = 1d-5
       num_cells_for_smooth_gradL_composition_term = 10
