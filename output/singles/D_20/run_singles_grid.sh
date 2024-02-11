@@ -33,7 +33,7 @@ echo "Running mass $M"
 DIRECTORY=$GRID_DIR/"M_"$M
 if [ -d "$DIRECTORY" ]; then echo 'skipping'; exit 0; fi
 
-cp -R "$PROJ_DIR/template" $DIRECTORY 
+cp -R "$PROJ_DIR/template_singles" $DIRECTORY 
 cd $DIRECTORY
 
 mesa change $INLIST initial_mass $M
