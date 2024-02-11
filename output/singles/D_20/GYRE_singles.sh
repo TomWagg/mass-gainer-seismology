@@ -10,7 +10,7 @@
 
 export TEMP="/afs/mpa/temp/tomwagg"
 export PROJ_DIR="$TEMP/kavli"
-export GRID_DIR="$PROJ_DIR/output/cluster/singles_grid_mdm20"
+export GRID_DIR="$PROJ_DIR/output/singles/D_20"
 
 export MESA_CACHES_DIR="$TEMP/mesa_cache"
 export JOB_NAME="$1"
