@@ -100,10 +100,10 @@ def get_delta_p(track, mod=None, X_c=None, age=None, drop_duplicate_ng=True):
 
     if drop_duplicate_ng:
         df = df.drop_duplicates(subset="n_g", keep="last")
-            
+
     periods = 1 / df["Re(freq)"].values * u.day
     ng = df["n_g"].values
-    delta_p  = periods[:-1] - periods[1:]
+    delta_p = periods[:-1] - periods[1:]
     return periods[:-1], ng[:-1], delta_p
 
 
