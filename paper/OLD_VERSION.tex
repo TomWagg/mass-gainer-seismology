@@ -15,7 +15,7 @@
 \usepackage[figuresright]{rotating}
 
 % remove indents in footnotes
-\usepackage[hang,flushmargin]{footmisc} 
+\usepackage[hang,flushmargin]{footmisc}
 
 \usepackage{styles/todo_notes}
 
@@ -71,7 +71,9 @@
 \newcommand{\UW}{\affiliation{Department of Astronomy, University of Washington, Seattle, WA, 98195}}
 \newcommand{\mpa}{\affiliation{Max-Planck-Institut für Astrophysik, Karl-Schwarzschild-Straße 1, 85741 Garching, Germany}}
 \newcommand{\yale}{\affiliation{Department of Astronomy, Yale University, CT, 06511, USA}}
-\newcommand{\sac}{\affiliation{Stellar Astrophysics Centre, Aarhus University, Aarhus, Denmark}}
+\newcommand{\sac}{\affiliation{Stellar Astrophysics Centre, Aarhus
+    University, Aarhus, Denmark}}
+\newcommand{\ua}{\affiliation{Steward Observatory, University of Arizona, 933 N. Cherry Avenue, Tucson, AZ 85721, USA}}
 \newcommand{\cca}{\affiliation{Center for Computational Astrophysics, Flatiron Institute, 162 Fifth Ave, New York, NY, 10010, USA}}
 \newcommand{\radbound}{\affiliation{Department of Astrophysics, IMAPP, Radboud University Nijmegen, PO Box 9010, 6500 GL Nijmegen, The Netherlands}}
 \newcommand{\leuven}{\affiliation{Institute of Astronomy, KU Leuven, Celestijnenlaan 200D, 3001 Leuven, Belgium}}
@@ -82,6 +84,7 @@
 \mpa{}
 
 \author[0000-0002-3054-4135]{Cole Johnston}
+\mpa
 \radbound{}
 \leuven{}
 
@@ -91,6 +94,7 @@
 \sac{}
 
 \author[0000-0002-6718-9472]{Mathieu Renzo}
+\ua{}
 \cca{}
 
 \author[0000-0001-9336-2825]{Selma E. de Mink}
@@ -112,21 +116,21 @@
 
 \section{Introduction} \label{sec:intro}
 
-The majority of OB-type stars are born in binaries and multiple systems \citep[e.g.][]{Mason+2009, Almeida+2017, Moe+2017}, a large subset of which will exchange mass at some point in their life time \citep[e.g][]{Sana+2012,deMink+2014}. However, mass transfer, both the process itself and the impact it has on the component stars, is still highly uncertain. Specifically, there are large uncertainties in the mass transfer rates \citep{Dray+2007}, how much mass and angular momentum is transferred \citep{Packet+1981,deMink+2007:2007A&A...467.1181D,Renzo+2021}, how much mass is lost from the system \citep{Tout2012}, and how the accretor star adjusts to the incoming mass \citep{Hellings1983,Braun+1995,Cantiello+2007,Staritsin+2019,Renzo+2023}. These uncertainties in understanding the process of mass transfer result in uncertainties in evolutionary calculations and predictions, such as the rate of formation of close double compact objects \citep{Toonen+2013,Marchant2021+, vanSon+2022:2022ApJ...940..184V}, stripped stars \citep{Crowther2007,Heber2016,Gotberg+2020}, X-ray binaries \citep{Fragos+2013:2013ApJ...764...41F}, and gravitational wave sources \citep[e.g.][]{Broekgaarden+2022,Iorio+2023}.
+The majority of OB-type stars are born in binaries and multiple systems \citep[e.g.][]{Mason+2009, Almeida+2017, Moe+2017}, a large subset of which will exchange mass at some point in their lifetime \citep[e.g][]{Sana+2012,deMink+2014}. However, mass transfer, both the process itself and the impact it has on the component stars, is still highly uncertain. Specifically, there are large uncertainties in the mass transfer rates \citep{Dray+2007}, how much mass and angular momentum is transferred \citep{Packet+1981,deMink+2007:2007A&A...467.1181D,Renzo+2021}, how much mass is lost from the system \citep{Tout2012}, and how the accretor star adjusts to the incoming mass \citep{Hellings1983,Braun+1995,Cantiello+2007,Staritsin+2019,Renzo+2023}. These uncertainties in understanding the process of mass transfer result in uncertainties in evolutionary calculations and predictions, such as the rate of formation of close double compact objects \citep{Toonen+2013,Marchant2021+, vanSon+2022:2022ApJ...940..184V}, stripped stars \citep{Crowther2007,Heber2016,Gotberg+2020}, X-ray binaries \citep{Fragos+2013:2013ApJ...764...41F}, and gravitational wave sources \citep[e.g.][]{Broekgaarden+2022,Iorio+2023}.
 
 
 % There are still many uncertainties in the effect that mass transfer has on mass-gainers \citep{Braun+1995,Dray+2007,Renzo+2021,Renzo+2023}, despite the many investigations into understanding the diversity of mass-losers \citep{Crowther2007,Solheim2010,Heber2016,Gotberg+2020}.\mathieu{(from Tom) - I copied this out of the project proposal but unsure on the refs here. Could you point me to some of these or a starting paper I can use to find the rest?} Among the {\bf many} uncertainties, a key question is whether a mass-gainer will be rejuventated, where convective cores in accretors grow to account for the additional mass \citep[e.g.][]{Neo+1977,Hellings1983,Vanbeveren+1994,Braun+1995}, and if so, to what extent. The process of rejuvenation is thought to create a distinct imprint in the density, chemical, and entropy profile of accretor stars \citep{Cantiello+2007,Renzo+2021,Renzo+2023}. However, as these effects are hidden deep within the stellar interior, there is no direct strong observational diagnostic for determining whether the core of a star has been rejuvenated to date.
 
-Asteroseismology probes the internal structure of stars through the analysis of stellar pulsations \citep{Aerts+2010} and so may hold the key to directly probing rejuvenation. %It is well established that asteroseismology can be used to estimate precise stellar masses, radii and ages based on stellar oscillation modes \citep{Aerts+2010}.
+Asteroseismology probes the internal structure of stars through the analysis of stellar pulsations \citep{Aerts+2010} and so may hold the key to directly probing {\bf how accretor stars adjust to gaining mass, e.g.} rejuvenation. %It is well established that asteroseismology can be used to estimate precise stellar masses, radii and ages based on stellar oscillation modes \citep{Aerts+2010}.
 In particular, high-order gravity ($g$) mode pulsations carry information about the deep radiative interiors of stars. Main sequence stars that exhibit \gmodes include F-type $\gamma$~Doradus stars, driven by convective flux blocking \citep{Guzik+2000} and Slowly Pulsating B-type (SPB) stars, driven by the $\kappa/\gamma$-mechanism \citep{Waelkens+1985, Waelkens+1991, Cox+1992, Pamyatnykh+1999}.
 % These pulsators include $\gamma$ Doradus stars driven by the modulation of the radiative flux by convection at the base of a deep envelope convection zone \citep{Guzik+2000}, and Slowly Pulsating B (SPB) stars and $\beta$ Ceph stars driven by the $\kappa$-mechanism \citep{Waelkens+1985, Waelkens+1991, Kiriakidis+1992, Moskalik+1992, Cox+1992}.
-These \gmode pulsators have been used to provide insights into many aspects of stellar structure and evolution, such as the masses of stellar cores \citep{Johnston+2021, Pedersen+2022} internal mixing processes \citep{Pedersen+2018,Michielsen+2021}, and angular momentum transport \citep{Aerts+2019,Burssens+2023,Mombarg2023}. Recent work has also demonstrated that \gmodes can be used to probe the history of stellar mergers in low and intermediate mass \citep{Rui+2021} and high mass stars \citep{Bellinger+2023:2023arXiv231100038B}.
+These \gmode pulsators have been used to provide insights into many aspects of stellar structure and evolution, such as the masses of stellar cores \citep{Johnston+2021, Pedersen+2022} internal mixing processes \citep{Pedersen+2018,Michielsen+2021}, and angular momentum transport \citep{Aerts+2019,Burssens+2023,Mombarg2023}. Recent work has also demonstrated that \gmodes can be used to probe the {\bf binary evolutionary} history of stellar mergers in {\bf the evolution products of} low and intermediate mass \citep{Rui+2021} and high mass stars \citep{Bellinger+2023:2023arXiv231100038B}.
 
-These insights into stellar properties are possible due to the intricate dependence of period spectrum of \gmode pulsations on the size of the convective core, and the chemical composition gradient and structure outside of the core \citep[e.g.][]{Miglio+2008,Hatta+2023}. Current works only consider single star evolution when inferring stellar properties. However, mass transfer can profoundly influence the structure and composition gradients of accreting stars even after thermal re-adjustment, as indicated by numerous studies using 1D stellar evolution codes \citep{Braun+1995,Renzo+2021,Miszuda+2021}. These changes in structure are usually a result of rejuvenation. As the frequencies of stellar pulsations are finely tuned by the internal structure of stars, asteroseismology holds the potential to identify the signature of previous mass transfer in various classes of pulsating stars. Furthermore, assuming single star evolution for a star that has undergone accretion may result in misleading inferences of its stellar properties from asteroseismology.
+These insights into stellar properties are possible due to the intricate dependence of period spectrum of \gmode pulsations on the size of the convective core, and the chemical composition gradient and structure outside of the core \citep[e.g.][]{Miglio+2008,Hatta+2023}. Current works only consider single star evolution when inferring stellar properties. However, mass transfer can profoundly influence the structure and composition gradients of accreting stars even after thermal re-adjustment, as indicated by numerous studies using 1D stellar evolution codes \citep{Braun+1995,Renzo+2021,Miszuda+2021}. These changes in structure are usually a result of {\bf the} rejuvenation {\bf and growth of the convective nuclear burning core}. As the frequencies of stellar pulsations are finely tuned by the internal structure of stars, asteroseismology holds the potential to identify the signature of previous mass transfer in various classes of pulsating stars. Furthermore, assuming single star evolution for a star that has undergone accretion may result in misleading inferences of its stellar properties from asteroseismology.
 
-Earlier works have explored full asteroseismic modelling that accounts for the impacts of binary evolution \citep{Guo+2017:2017ApJ...837..114G, Miszuda+2021, Miszuda+2022:2022MNRAS.514..622M}. These works performed comprehensive studies of specific observed sources, using binary evolution computations to find acceptable models for the current state of observed systems. This allowed for the comparison of observed asteroseismic signals to binary models, though did not directly explore the difference in internal structure and asteroseismic signals between a single star and accretor.
+Earlier works have explored {\bf the} asteroseismic modelling {\bf of stars in post mass-transfer binaries, with various degrees of accounting for the history of mass transfer. In particular, \citet{Guo+2017:2017ApJ...837..114G,Guo2017b} and \citet{Chen2021} performed asteroseismic analysis of pulsating stars in post-mass transfer binaries observed by {\it Kepler}. While \citet{Guo+2017:2017ApJ...837..114G,Guo2017b} found suitable solutions using only single star evolution models, \citet{Chen2021} compared solutions from binary and single star evolution models. Although \citet{Guo+2017:2017ApJ...837..114G} briefly mention that their solutions may be impacted by not considering the different composition and g mode cavity resulting from mass transfer, they make no further analysis of these effects. Each of these studies conclude that, for their particular systems, single star models were sufficient. In recent work, \citet{Miszuda+2021,Miszuda+2022:2022MNRAS.514..622M} carried out the asteroseismic analysis of p modes in two post mass transfer binaries using full binary evolution models with {\sc mesa}, demonstrating the impact that active mass transfer has on mode excitation and the change of pulsation frequencies as the mass of the accretor increases. Furthermore, \citet{Miszuda+2021} demonstrated that their asteroseismic solution preferred models with slightly non-conservative mass transfer, indicating that p mode asteroseismology can potentially constrain the efficiency of mass transfer in binary stars.}
 
-Inspired by these works, we assess the impact that mass transfer leaves on the asteroseismic signal of pulsating accretor stars. In particular we focus on SPB stars as they are numerous, easily observationally identifiable, and have a relatively high binary fraction. We use the 1D stellar evolution code \mesa to demonstrate the difference in evolution between an accreting star and an equivalent single star. Using the \gyre stellar oscillation code we show how these differences in evolution influence the period spacing pattern of an accreting star and highlight how this could affect the inferred properties of the star if single stellar evolution was assumed. All code to reproduce the results and figures in this paper is available on GitHub\footnote{\url{https://github.com/TomWagg/mass-gainer-seismology}}.
+{\bf Building on these} works, we {\bf investigate} the impact that mass transfer {\bf has} on the asteroseismic signals of {\bf \gmodes in} accretor stars {\bf that experience rejuvenation of the convective stellar core}. In particular we focus on SPB stars as they are numerous, easily observationally identifiable, and have a relatively high binary fraction. We use the 1D stellar evolution code \mesa to demonstrate the difference in evolution between an accreting star and an equivalent single star. Using the \gyre stellar oscillation code we show how these differences in evolution influence the period spacing pattern of an accreting star and highlight how this could affect the inferred properties of the star if single stellar evolution was assumed. All code to reproduce the results and figures in this paper is available on GitHub\footnote{\url{https://github.com/TomWagg/mass-gainer-seismology}}.
 
 \section{Binary Stellar Evolution} \label{sec:methods}
 
@@ -136,13 +140,13 @@ In this Section we outline the setup of our \mesa binary model and describe the 
 
 We use Modules for Experiments in Stellar Astrophysics \citep[\mesa,][]{Paxton2011, Paxton2013, Paxton2015, Paxton2018, Paxton2019, Jermyn2023} version r23.05.1 \citep{mesa_zenodo} to simulate non-rotating models for a binary system, as well as a grid of single stars against which to compare. Our full inlists, template folders and our model outputs are available on Zenodo\footnote{\url{https://zenodo.org/record/}}.
 
-In particular, the most pertinent settings that we use for this work are as follows: We adopt the \citet{Ledoux+1947} criterion to account for the presence of a chemical gradient when determining the stability of convection. We include semiconvection following \citet{Langer+1983} with a scaled efficiency of $\alpha_{\rm sc}=0.1$. We use exponential core overshooting from \cite{Herwig+2000}, setting $(f, f_0) = (0.01, 0.005)$ \citep{Claret+2017}. We set a minimum diffusive mixing coefficient of $20~\unit{cm^{2} ~s^{-1}}$; this smooths out any numerical discontinuities in the composition gradients and accounts for a lack of rotational mixing in our models. We motivate our choice of $20~\unit{cm^{2} ~s^{-1}}$ and highlight the effect of changing the mixing coefficient on our results in Appendix~\ref{app:min_D_mix}. We do not account for any rotation in our models and discuss this choice further in Section~\ref{sec:caveats}. For more details on the \mesa input physics and settings, see Appendix~\ref{app:mesa_inputs}. We additionally confirm the convergence of our models in Appendix~\ref{app:convergence_tests}.
+In particular, the most pertinent settings that we use for this work are as follows: We adopt the \citet{Ledoux+1947} criterion to account for the presence of a chemical gradient when determining the stability of convection. We include semiconvection following \citet{Langer+1983} with a scaled efficiency of $\alpha_{\rm sc}=0.1$. We use exponential core overshooting from \cite{Herwig+2000}, setting $(f, f_0) = (0.01, 0.005)$ \citep{Claret+2017}. We set a minimum diffusive mixing coefficient of $20~\unit{cm^{2} ~s^{-1}}$; this smooths out any numerical discontinuities in the composition gradients and partially accounts for a lack of rotational mixing in our models. We motivate our choice of $20~\unit{cm^{2} ~s^{-1}}$ and highlight the effect of changing the mixing coefficient on our results in Appendix~\ref{app:min_D_mix}. We do not account for any rotation in our models and discuss this choice further in Section~\ref{sec:caveats}. For more details on the \mesa input physics and settings, see Appendix~\ref{app:mesa_inputs}. We additionally confirm the convergence of our models in Appendix~\ref{app:convergence_tests}.
 
 Our binary model has a donor with an initial mass of 4\msun and an accretor with an initial mass of 3\msun, following the typical mass range of SPB stars \citep{Waelkens+1985, Waelkens+1991, Kurtz+2022}, with an initial period of 5 days and metallicity $Z = 0.02$. We evolve this system up to Roche Lobe overflow and proceed with mass transfer until the secondary accretes 0.5\msun. At this point we end mass transfer, detach the binary and reduce the donor to a point mass, since we are no longer interested in the properties of the donor and thus only track the evolution of the accretor from this point onwards. By detaching the binary we avoid numerical complications with the late evolutionary phases of the donor which are not of interest to this study, and additionally avoid the regime where rotation would become dominant. Although our choice of $0.5\msun$ is somewhat arbitrary, this amount could be obtained through different choices of mass transfer efficiencies and the spin-up of the accretor would likely hinder accretion in a similar manner. By constructing our model in this way we are able to account for a realistic, variable accretion rate as predicted by the evolution of the orbit and donor star. We then evolve the rejuvenated accretor until central hydrogen depletion. Additionally, for comparison, we evolve a grid of single stars with masses from 3-6\msun until the end of helium core burning.
 
 \subsection{\hrd evolution}
 
-\begin{figure}%[htb] % EPB: I think it's better (and journal style) for the figures to appear at the top of the page where they are first mentioned, not at a random point within the text 
+\begin{figure}%[htb] % EPB: I think it's better (and journal style) for the figures to appear at the top of the page where they are first mentioned, not at a random point within the text
     \centering
     \includegraphics[width=\columnwidth]{paper/figures/HRD_binary_compromise.pdf}
     \caption{\hrd showing the evolution of the binary. Tracks are shown for both the donor and accretor, coloured by the absolute mass transfer rate. We additionally show the full evolution of the donor track had we not detached the binary with a dark grey line. We highlight the accretor track with a green outline. Single star tracks added as dashed light grey curves, with masses from $3$ to $4 \unit{M_\odot}$ in $0.1 \unit{M_\odot}$ intervals. Important points in the evolution are annotated with arrows and described in the text.}
@@ -288,31 +292,31 @@ In Figure~\ref{fig:chi2_xc_0.2}, we show an example of this $\chi^2$ fitting. In
 %     \label{tab:fits}
 % \end{table}
 
-We repeated this fitting procedure throughout the post-accretion evolution of the mass-gainer model and summarise the results in Table~\ref{tab:fits}. Shortly after mass transfer ends (at $X_c = 0.47$), the best fit overestimates $X_c$ but accurately determines the stellar mass. As the star settles back into thermal equilibrium, the best-fit improves, with mass and $X_c$ values very close to the true values. However, in the later stages of the star's main sequence evolution after a fraction of the nuclear lifetime post-mass transfer ($X_c \le 0.2$), the best-fit diverges from the true value again, significantly overestimating $X_c$ by at least a factor of 2 and consistently underestimating the stellar mass by up to $0.5 \msun$ in this example.
+We repeated this fitting procedure throughout the post-accretion evolution of the mass-gainer model and summarise the results in Figure~\ref{fig:relative_estimates}. Shortly after mass transfer ends (at $X_c = 0.47$), the best fit overestimates $X_c$ but accurately determines the stellar mass. As the star settles back into thermal equilibrium, the best-fit improves, with mass and $X_c$ values very close to the true values. However, in the later stages of the star's main sequence evolution after a fraction of the nuclear lifetime post-mass transfer ($X_c \le 0.2$), the best-fit diverges from the true value again, significantly overestimating $X_c$ by at least a factor of 2 and consistently underestimating the stellar mass by up to $0.5 \msun$ in this example.
 
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{paper/figures/relative_estimates.pdf}
-    \caption{Caption}
-    \label{fig:enter-label}
+    \caption{Assuming single star evolution for stars that have accreted mass can lead to an overestimation of central hydrogen fraction, $X_c$, and an underestimation of mass. Ratio of best-fit single star model and mass-gainer model for $X_c$ (upper panel) and mass (lower panel) as a function of time.}
+    \label{fig:relative_estimates}
 \end{figure}
 
-\begin{table}[htb]
-    \centering
-    \begin{tabular}{c|cc}
-        \hline
-        Mass-gainer & \multicolumn{2}{c}{Best fitting single star model} \\
-        $X_c$ & $X_c$ & $M\, [\msun]$ \\ \hline
-        0.47 & 0.642 & 3.5\\
-        0.4 & 0.417 & 3.5\\
-        0.3 & 0.309 & 3.5\\
-        0.2 & 0.400 & 3.1\\
-        0.1 & 0.256 & 3.0\\
-        0.01 & 0.021 & 3.2\\ \hline
-    \end{tabular}
-    \caption{Comparison of best-fit single star models to mass-gainer model at different evolutionary stages. Columns show central hydrogen content, $X_c$, and stellar mass, $M$. In each case the mass-gainer model has a mass of $3.5 \msun$.}
-    \label{tab:fits}
-\end{table}
+% \begin{table}[htb]
+%     \centering
+%     \begin{tabular}{c|cc}
+%         \hline
+%         Mass-gainer & \multicolumn{2}{c}{Best fitting single star model} \\
+%         $X_c$ & $X_c$ & $M\, [\msun]$ \\ \hline
+%         0.47 & 0.642 & 3.5\\
+%         0.4 & 0.417 & 3.5\\
+%         0.3 & 0.309 & 3.5\\
+%         0.2 & 0.400 & 3.1\\
+%         0.1 & 0.256 & 3.0\\
+%         0.01 & 0.021 & 3.2\\ \hline
+%     \end{tabular}
+%     \caption{Comparison of best-fit single star models to mass-gainer model at different evolutionary stages. Columns show central hydrogen content, $X_c$, and stellar mass, $M$. In each case the mass-gainer model has a mass of $3.5 \msun$.}
+%     \label{tab:fits}
+% \end{table}
 
 We therefore show that, though there are regimes within the main sequence in which using single star models may suffice for fitting mass-gainers, for a sizeable fraction of the main sequence this will result in significant inaccuracies. The exact regimes in which these inaccuracies occur are likely mass and model dependent. Yet, given that the central hydrogen content of a star is generally unknown a priori, as well how recently it may have undergone mass transfer, this implies one should be cautious when fitting a potential mass-gainer using single star models.
 
@@ -340,10 +344,10 @@ We have presented new simulations investigating the impact of mass transfer on t
 
 \begin{enumerate}
     \item \textbf{Mass transfer leaves asteroseismic imprints}\\Our accretor star model shows significantly different internal structure (see Figures~\ref{fig:XH_profiles}--\ref{fig:BV_profiles}) and asteroseismic signals (see Figure~\ref{fig:period_spacing}) compared to an equal mass star that has undergone single star evolution.
-    \item \textbf{Assuming single star evolution can lead to significant inaccuracies}\\We show that one may infer inaccurate stellar properties if assuming single star evolution when fitting the period spacing pattern of a star that has undergone accretion (see Figure~\ref{fig:chi2_xc_0.2}). For our model we find that masses may be underestimated by up to $0.5 \msun$, while the central hydrogen content can be overestimated by up to a factor of 2.5.
+    \item \textbf{Assuming single star evolution can lead to significant inaccuracies}\\We show that one may infer inaccurate stellar properties if assuming single star evolution when fitting the period spacing pattern of a star that has undergone accretion (see Figure~\ref{fig:chi2_xc_0.2}). For our model we find that masses may be underestimated by up to $0.5 \msun$, while the central hydrogen content can be overestimated by up to a factor of 2.5 (see Figure~\ref{fig:relative_estimates}).
 \end{enumerate}
 
-This work demonstrates that asteroseismology can be used to probe the structural impact of mass accretion in binary interaction. These results have immediate implications as this opens the door to providing observational constraints on poorly-understood binary evolution processes that are otherwise unobservable. In particular, there are several classes of known or strongly favoured post-mass transfer systems, such as Algol variables and Be-type stars \citep[e.g.][]{Bodensteiner+2020}, that are: i) known \gmode pulsators, and ii) have existing long time-base photometry with telescopes such as Kepler \citep{Borucki+2010} and TESS \citep{Ricker+2015}. Future work will investigate the sensitivity of asteroseismic signals to the rate of mass transfer, as well as the mixing processes that accompany mass transfer. Finally, detecting the signatures of mass transfer in currently available asteroseismic data will bridge the exploits of asteroseismology to help calibrate predictions of gravitational wave progenitor populations which require at least one episode of mass transfer in their evolution to interpret the observed distributions of gravitational wave progenitors and events \citep{Abbott+2023}.  
+This work demonstrates that asteroseismology can be used to probe the structural impact of mass accretion in binary interaction. These results have immediate implications as this opens the door to providing observational constraints on poorly-understood binary evolution processes that are otherwise unobservable. In particular, there are several classes of known or strongly favoured post-mass transfer systems, such as Algol variables and Be-type stars \citep[e.g.][]{Bodensteiner+2020}, that are: i) known \gmode pulsators, and ii) have existing long time-base photometry with telescopes such as Kepler \citep{Borucki+2010} and TESS \citep{Ricker+2015}. Future work will investigate the sensitivity of asteroseismic signals to the rate of mass transfer, as well as the mixing processes that accompany mass transfer. Finally, detecting the signatures of mass transfer in currently available asteroseismic data will bridge the exploits of asteroseismology to help calibrate predictions of gravitational wave progenitor populations which require at least one episode of mass transfer in their evolution to interpret the observed distributions of gravitational wave progenitors and events \citep{Abbott+2023}.
 
 \begin{acknowledgements}
     We thank the Kavli Foundation and the Max Planck Institute for Astrophysics for supporting the 2023 Kavli Summer Program during which much of this work was completed. In particular, TW thanks Isabel Thapa, Stephen Justham and Selma de Mink for their incredible efforts in organising this program. TW also thanks Ruggero Valli for his help, and patience, with setting up \mesa on the MPA cluster and sharing the secret commands of \texttt{kinit} and \texttt{aklog}. CJ gratefully acknowledges support from the Netherlands Research School of Astronomy (NOVA). CJ thanks Amadeusz Miszuda for sharing his {\sc mesa} {\sc binary} inlists to help start up this research. RT acknowledges support from NASA grant 80NSSC20K0515.
@@ -381,7 +385,7 @@ However, an overly low choice of $D_{\rm min}$ leads to numerical glitches in th
     \label{fig:period_spacing_mdm100}
 \end{figure}
 
-We explored a more dense grid of $D_{\rm min}$ models and found that $D_{\rm min} = 20 \unit{cm^2}{s^{-1}}$ was the smallest level of mixing that still removed numerical glitches, which informed our selection of this model as the default choice in this paper. 
+We explored a more dense grid of $D_{\rm min}$ models and found that $D_{\rm min} = 20 \unit{cm^2}{s^{-1}}$ was the smallest level of mixing that still removed numerical glitches, which informed our selection of this model as the default choice in this paper.
 
 Many processes are expected to induce extra mixing, such as wave mixing and in particular induced rotation in the accretors \citep{Packet+1981}. While we do not attempt to directly and explicitly model these phenomena, the choice of applying a $D_{\rm min}$ to prevent numerical artifacts partially compensates for this.
 
@@ -417,3 +421,7 @@ In Figure~\ref{fig:xh_convergence} we show the hydrogen abundance profiles with 
 For \gyre, as described in Section~\ref{sec:period_spacing}, our frequency scanning range is between 0.25 and 10 cycles per day (equivalent to 0.1 and 4 days) with 2000 steps. Our choice of 2000 steps was determined by iteratively increasing the number of steps until the predicted frequencies of the pulsation modes output by \gyre converged.
 
 \end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
