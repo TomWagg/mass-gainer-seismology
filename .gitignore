@@ -181,3 +181,5 @@ output/*/*/*
 output/*/*.e
 output/*/*.o
 .vscode/
+
+!output/singles/D_20/*.sh
