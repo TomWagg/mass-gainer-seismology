@@ -51,7 +51,7 @@ def simple_hr(track=None, df=None, ylabel=r'Luminosity $\log_{10}(L/{\rm L_{\odo
     new_fig = (fig is None or ax is None)
     if new_fig:
         fig, ax = plt.subplots(figsize=(8,6))
-    
+
     if df is None:
         df = track.history
 
