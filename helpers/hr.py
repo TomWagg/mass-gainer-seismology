@@ -44,7 +44,7 @@ def add_singles_tracks(fig, ax, tracks, Ms=None, colour="lightgrey", linestyle="
 def simple_hr(track=None, df=None, ylabel=r'Luminosity $\log_{10}(L/{\rm L_{\odot}})$',
               cbar_var="center_he4", cbar_label=r"$X_{\rm He, center}$", trim_pre_ms=True,
               fig=None, ax=None, show=True, add_axes_info=False,
-              plot_line=True, line_colour="grey", line_z=-1, linestyle="-",
+              plot_line=True, line_colour="grey", line_z=-1, linestyle="-", lw=1,
               cbar_loc=[0.38, 0.025, 0.6, 0.025], inset_cbar=True,
               annotate_start=None, annotate_end=None, R_levels=None, mod_range=None, time_step=None,
               **kwargs):
@@ -73,7 +73,7 @@ def simple_hr(track=None, df=None, ylabel=r'Luminosity $\log_{10}(L/{\rm L_{\odo
     c = df[cbar_var] if cbar_var is not None else None
     
     if plot_line:
-        ax.plot(df['log_Teff'], df['log_L'], color=line_colour, zorder=line_z, linestyle=linestyle)
+        ax.plot(df['log_Teff'], df['log_L'], color=line_colour, zorder=line_z, linestyle=linestyle, lw=lw)
     ax.scatter(df['log_Teff'], df['log_L'], c=c, **kwargs)
 
     if annotate_start is not None:
