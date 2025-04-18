@@ -2,8 +2,8 @@
   <h1>The Asteroseismic Imprints of Mass Transfer</h1>
   <h5><ins>Tom Wagg</ins>, Cole Johnston, Earl Bellinger, Mathieu Renzo, Rich Townsend & Selma de Mink</h5>
 
-  <a href="https://ui.adsabs.harvard.edu/">
-    <img src="https://img.shields.io/badge/read-paper (TODO)-blue"/>
+  <a href="https://ui.adsabs.harvard.edu/abs/2024A%26A...687A.222W/abstract">
+    <img src="https://img.shields.io/badge/read-paper-blue"/>
   </a>
   <a href="mailto:tomwagg@uw.edu">
     <img src="https://img.shields.io/badge/contact-authors-purple"/>
